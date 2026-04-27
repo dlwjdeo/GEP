@@ -1,4 +1,4 @@
 public interface IEatable
 {
-    void Eat();
+    void Eat(Player player);
 }

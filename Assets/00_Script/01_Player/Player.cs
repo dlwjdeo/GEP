@@ -20,16 +20,11 @@ public class Player : MonoBehaviour
         // 입력 처리 후 각종 행동 처리
         if(FowardGameObject != null)
         {
-            if(FowardGameObject.TryGetComponent<Item>(out var item))
-            {
-                item.BindPlayer(this); // 아이템이 있을 때 플레이어 참조 전달
-            }
-
             if(Input.GetKeyDown(KeyCode.X))
             {
                 if(FowardGameObject.TryGetComponent<IInteractable>(out var interactable))
                 {
-                    interactable.Interact();
+                    interactable.Interact(this);
                 }
             }
         }
@@ -43,7 +38,7 @@ public class Player : MonoBehaviour
         {
             if(playerInventory.HasItem() && playerInventory.currentItemObject.TryGetComponent<IEatable>(out var eatable))
             {
-                eatable.Eat();
+                eatable.Eat(this);
             }
         }
     }
@@ -76,15 +71,7 @@ public class Player : MonoBehaviour
 
         if(FowardGameObject != null && FowardGameObject.TryGetComponent<IPickupable>(out var pickupable))
         {
-            pickupable.Pickup();
-        }
-    }
-
-    public void Interact()
-    {
-        if(FowardGameObject != null && FowardGameObject.TryGetComponent<IInteractable>(out var interactable))
-        {
-            interactable.Interact();
+            pickupable.Pickup(this);
         }
     }
 }
