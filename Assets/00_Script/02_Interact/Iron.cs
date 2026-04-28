@@ -16,4 +16,6 @@ public class Iron : Item, IInteractable, IPickupable
         gameObject.transform.SetParent(player.transform); 
         gameObject.transform.localPosition = Vector3.up; 
     }
+
+    
 }

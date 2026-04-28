@@ -14,6 +14,7 @@ public class CraftManager : MonoBehaviour
     {   
         //제작의 결과물이 아이템이 될 수도 있지만, 만약 Equipment들이 아이템이 아닌 해금형식이나 등록 형식으로 사용된다면 유연하게 함수호출하여 해당 클래스 내부 값을 꾸게 해야하기 때문에 Value를 함수로.
         _recipeTable.Add((typeof(Wood), typeof(Iron)), UnlockAxe);
+
     }
 
     public bool Craft(Item holdItem, Item targetItem)

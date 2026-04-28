@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
-{
+{   
+    
     [SerializeField] private PlayerInventory playerInventory;
     [SerializeField] private PlayerMovement playerMovement;
 
@@ -58,6 +59,7 @@ public class Player : MonoBehaviour
                 eatable.Eat(this);
             }
         }
+
     }
 
     private GameObject CheckForward()
