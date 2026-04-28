@@ -5,16 +5,33 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private PlayerInventory playerInventory;
+    [SerializeField] private PlayerMovement playerMovement;
 
     [Header("Ray Settings")]
     [SerializeField] private float interactRange = 2f;
     [SerializeField] private LayerMask ItemLayer;
 
     public PlayerInventory PlayerInventory => playerInventory;
+    public PlayerMovement PlayerMovement => playerMovement;
     public GameObject FowardGameObject { get; private set; }
+
+    public PlayerStateMachine stateMachine;
+
+    public Vector3 movementInput { get; private set; }
+    public float fishingDuration { get; private set; }
+    public float loggingDuration { get; private set; }
+    public float eatingDuration { get; private set; }
+
+    public void Awake()
+    {
+        stateMachine = new PlayerStateMachine(this);
+    }
 
     public void Update()
     {
+        DetectMovementInput();
+        
+        stateMachine.Update();
         FowardGameObject = CheckForward();
         
         // 입력 처리 후 각종 행동 처리
@@ -74,4 +91,16 @@ public class Player : MonoBehaviour
             pickupable.Pickup(this);
         }
     }
+
+    public void DetectMovementInput()
+    {
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+
+        movementInput = new Vector3(horizontal, 0f, vertical).normalized;
+    }
+
+    public void SetFishingDuration(float duration) => fishingDuration = duration;
+    public void SetLoggingDuration(float duration) => loggingDuration = duration;   
+    public void SetEatingDuration(float duration) => eatingDuration = duration;
 }
