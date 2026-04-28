@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
-{
+{   
+    
     [SerializeField] private PlayerInventory playerInventory;
 
     [Header("Ray Settings")]
@@ -41,6 +42,7 @@ public class Player : MonoBehaviour
                 eatable.Eat(this);
             }
         }
+
     }
 
     private GameObject CheckForward()
