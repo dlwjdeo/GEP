@@ -163,11 +163,6 @@ public class EatingState : IState
 
     public void Update()
     {
-        if(player.movementInput.magnitude > 0.1f)
-        {
-            player.stateMachine.ChangeState(player.stateMachine.moveState);
-            return;
-        }
         if(eatingDuration > 0f)
         {
             eatingDuration -= Time.deltaTime;
@@ -175,6 +170,11 @@ public class EatingState : IState
         else
         {
             // 먹기 완료 처리
+            GameManager.Instance.IncreasePlayerHealth(player.PlayerInventory.currentItemObject.GetComponent<IEatable>().FillAmount); // 체력 회복
+            player.PlayerInventory.RemoveItem(); // 아이템 제거
+            
+            Debug.Log("먹기 완료!");
+
             player.stateMachine.ChangeState(player.stateMachine.idleState);
         }
     }

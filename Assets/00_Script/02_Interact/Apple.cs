@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Apple : Item, IInteractable, IPickupable, IEatable
 {
+    [SerializeField] private float fillAmount = 20f; // 체력 회복량
+    [SerializeField] private float eatDuration = 2f; // 먹는 데 걸리는 시간
+
+    public float FillAmount => fillAmount;
+
     public void Interact(Player player)
     {
         //사과를 심는 로직 구현
@@ -13,8 +18,9 @@ public class Apple : Item, IInteractable, IPickupable, IEatable
     public void Eat(Player player)
     {
         // 사과를 먹는 로직 구현
-        Debug.Log("사과를 먹었습니다!");
-        player.PlayerInventory.RemoveItem(); // 아이템 제거
+        Debug.Log("사과 먹기 실행!");
+        player.SetEatingDuration(eatDuration); // 플레이어의 먹는 시간 설정
+        player.stateMachine.ChangeState(player.stateMachine.eatingState); // 플레이어의 상태를 먹는 상태로 변경
     }
 
     public void Pickup(Player player)
