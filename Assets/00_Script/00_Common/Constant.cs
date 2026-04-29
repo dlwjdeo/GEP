@@ -2,9 +2,10 @@ public enum ItemType
 {
     None,
     Apple,
-    Firewood,
+    Wood,
     Iron,
     Plant,
     Fish,
-    Bucket
+    Bucket,
+
 }

@@ -4,16 +4,6 @@ using UnityEngine;
 
 public class Pond : MonoBehaviour , IInteractable
 {   
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
     public void Interact(Player player)
     {
         var itemType = player.PlayerInventory.GetCurrentItemType();
@@ -38,6 +28,7 @@ public class Pond : MonoBehaviour , IInteractable
         else if(itemType==ItemType.None && player.PlayerInventory.isUnlockFishing)  //손이 비어있으면서 낚시대가 해금
         {
             //낚시
+            Debug.Log("낚시중");
             return;
         }
         else
