@@ -6,14 +6,14 @@ using UnityEngine;
 public class PlayerInventory : MonoBehaviour
 {
     public GameObject currentItemObject; // 현재 들고 있는 아이템의 게임 오브젝트 참조
-    public bool isUnlockFishing { get; private set; }
+    public bool isUnlockFishing;
 
 
     private void Start()
     {
         isUnlockFishing = false;
     }
-    public ItemType GetCurrentItem()
+    public ItemType GetCurrentItemType()
     {
         if(currentItemObject != null)
         {
@@ -24,6 +24,14 @@ public class PlayerInventory : MonoBehaviour
             }
         }
         return ItemType.None;
+    }
+
+    public Item GetCurrentItem()
+    {
+        var item=currentItemObject.GetComponent<Item>();
+        if (item == null)
+            return null;
+        return item;
     }
 
     public void SetCurrentItem(GameObject itemObject)

@@ -16,7 +16,7 @@ public class Pond : MonoBehaviour , IInteractable
 
     public void Interact(Player player)
     {
-        var itemType = player.PlayerInventory.GetCurrentItem();
+        var itemType = player.PlayerInventory.GetCurrentItemType();
         if(itemType==ItemType.Bucket)
         {
             var bucket=player.PlayerInventory.currentItemObject.GetComponent<Bucket>();

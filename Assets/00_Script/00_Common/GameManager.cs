@@ -6,6 +6,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    [SerializeField]
+    private CraftManager craftManager;
+
+    public CraftManager CraftManager => craftManager;
+
     [Header("Player Stats")]
     [SerializeField] private float playerMaxHealth = 100f;
     [SerializeField] private float playerCurrentHealth = 100f;
