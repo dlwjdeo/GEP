@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
 
     public PlayerInventory PlayerInventory => playerInventory;
     public PlayerMovement PlayerMovement => playerMovement;
+
     public GameObject FowardGameObject { get; private set; }
 
     public PlayerStateMachine stateMachine;
