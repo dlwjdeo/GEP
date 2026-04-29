@@ -6,4 +6,5 @@ public enum ItemType
     Iron,
     Plant,
     Fish,
+    Bucket
 }

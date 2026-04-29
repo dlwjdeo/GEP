@@ -6,8 +6,13 @@ using UnityEngine;
 public class PlayerInventory : MonoBehaviour
 {
     public GameObject currentItemObject; // 현재 들고 있는 아이템의 게임 오브젝트 참조
-    private bool isUnlockFishing = false;
+    public bool isUnlockFishing { get; private set; }
 
+
+    private void Start()
+    {
+        isUnlockFishing = false;
+    }
     public ItemType GetCurrentItem()
     {
         if(currentItemObject != null)
