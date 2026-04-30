@@ -745,6 +745,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1671767893}
   - component: {fileID: 1671767892}
+  - component: {fileID: 1671767894}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -765,6 +766,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   craftManager: {fileID: 1393896571}
+  fishingManager: {fileID: 1671767894}
   playerMaxHealth: 100
   playerCurrentHealth: 100
   healthDecreaseRate: 1
@@ -788,6 +790,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1671767894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671767891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5868f1229af55984ca2e853a8c4f0df7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FishPrefab: {fileID: 5396189775039493088, guid: c15df81b944408e4bbaa2fb4878ee7d5, type: 3}
+  IronPrefab: {fileID: 8008269244215238048, guid: 15d1d184589eef44380cfb83d764dc21, type: 3}
+  WoodPrefab: {fileID: 4916658262098574185, guid: 72a68bba21bf71d4ea7eaa4b7413b949, type: 3}
+  PlantPrefab: {fileID: 7265817667487063022, guid: c3c84005c844f7341aaed0d1457eb601, type: 3}
+  fishSuccessRate: 0.5
+  woodSuccessRate: 0.2
+  plantSuccessRate: 0.2
+  ironSuccessRate: 0.1
 --- !u!1 &2061891696
 GameObject:
   m_ObjectHideFlags: 0
