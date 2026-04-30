@@ -81,6 +81,7 @@ public class FishingState : IState
     {
         player.PlayerMovement.SetMoveSpeed(0f);
         fishingDuration = player.fishingDuration;
+        //fishingDuration = Random.Range(2f, 5f); // 낚시 시간 랜덤 설정 (예시)
     }
 
     public void Update()
@@ -97,6 +98,7 @@ public class FishingState : IState
         else
         {
             // 낚시 완료 처리
+            GameManager.Instance.FishingManager.GetRandomFishingItem()?.GetComponent<IPickupable>()?.Pickup(player); // 낚시로 얻은 아이템을 플레이어가 픽업
             player.stateMachine.ChangeState(player.stateMachine.idleState);
         }
     }
@@ -175,6 +177,51 @@ public class EatingState : IState
             
             Debug.Log("먹기 완료!");
 
+            player.stateMachine.ChangeState(player.stateMachine.idleState);
+        }
+    }
+
+    public void Exit()
+    {
+        
+    }
+}
+
+public class CookingState : IState
+{
+    private Player player;
+    private float cookingDuration;
+
+    public CookingState(Player player)
+    {
+        this.player = player;
+    }
+
+    public void Enter()
+    {
+        player.PlayerMovement.SetMoveSpeed(0f);
+        cookingDuration = player.cookingDuration;
+    }
+
+    public void Update()
+    {
+        if(cookingDuration > 0f)
+        {
+            cookingDuration -= Time.deltaTime;
+        }
+        else
+        {
+            // 요리 완료 처리
+            GameObject cookedItem = player.PlayerInventory.currentItemObject; // 현재 아이템 가져오기
+            if (cookedItem != null && cookedItem.TryGetComponent<ICookable>(out var cookable))
+            {
+                cookedItem = cookable.Cooked(); // 요리 완료 처리
+                if (cookedItem != null)
+                {
+                    player.PlayerInventory.RemoveItem(); // 기존 아이템 제거
+                    GameObject.Instantiate(cookedItem).GetComponent<IPickupable>().Pickup(player); // 요리된 아이템을 플레이어가 픽업
+                }
+            }
             player.stateMachine.ChangeState(player.stateMachine.idleState);
         }
     }

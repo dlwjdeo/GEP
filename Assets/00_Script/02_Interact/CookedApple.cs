@@ -6,6 +6,7 @@ public class CookedApple : Item, IPickupable, IEatable
 {
     [SerializeField] private float fillAmount = 60f; // 체력 회복량
     [SerializeField] private float eatDuration = 2f; // 먹는 데 걸리는 시간
+    [SerializeField] private float cookDuration = 1f; // 조리하는 데 걸리는 시간
     public float FillAmount => fillAmount;
     public void Eat(Player player)
     {

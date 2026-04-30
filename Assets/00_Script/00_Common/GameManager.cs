@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     private CraftManager craftManager;
 
     public CraftManager CraftManager => craftManager;
+    [SerializeField] private FishingManager fishingManager;
+    public FishingManager FishingManager => fishingManager;
 
     [Header("Player Stats")]
     [SerializeField] private float playerMaxHealth = 100f;

@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fish : Item, IPickupable, IEatable
+public class Fish : Item, IPickupable, IEatable, ICookable
 {
 
     [SerializeField] private float fillAmount = 40f; // 체력 회복량
     [SerializeField] private float eatDuration = 2f; // 먹는 데 걸리는 시간
-    [SerializeField] private GameObject coockedFish;
+    [SerializeField] private float cookDuration = 3f; // 요리하는 데 걸리는 시간
+    [SerializeField] private GameObject cookedFish;
     public float FillAmount => fillAmount;
+    public float CookDuration => cookDuration;
     public void Eat(Player player)
     {
         Debug.Log("물고기 먹기 실행!");
@@ -26,8 +28,8 @@ public class Fish : Item, IPickupable, IEatable
 
     public GameObject Cooked()
     {
-        if (coockedFish == null)
+        if (cookedFish == null)
             return null;
-        return coockedFish;
+        return cookedFish;
     }
 }

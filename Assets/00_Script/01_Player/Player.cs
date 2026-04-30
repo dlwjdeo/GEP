@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     public float fishingDuration { get; private set; }
     public float loggingDuration { get; private set; }
     public float eatingDuration { get; private set; }
+    public float cookingDuration { get; private set; }
 
     public void Awake()
     {
@@ -106,4 +107,5 @@ public class Player : MonoBehaviour
     public void SetFishingDuration(float duration) => fishingDuration = duration;
     public void SetLoggingDuration(float duration) => loggingDuration = duration;   
     public void SetEatingDuration(float duration) => eatingDuration = duration;
+    public void SetCookingDuration(float duration) => cookingDuration = duration;
 }

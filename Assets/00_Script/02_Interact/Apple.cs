@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Apple : Item, IInteractable, IPickupable, IEatable
+public class Apple : Item, IInteractable, IPickupable, IEatable, ICookable
 {
     [SerializeField] private float fillAmount = 20f; // 체력 회복량
     [SerializeField] private float eatDuration = 2f; // 먹는 데 걸리는 시간
+    [SerializeField] private float cookDuration = 1f; // 조리하는 데 걸리는 시간
 
     [SerializeField] private GameObject cookedApple;
 
     public float FillAmount => fillAmount;
+    public float CookDuration => cookDuration;
 
     public void Interact(Player player)
     {

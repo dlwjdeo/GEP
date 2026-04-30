@@ -14,12 +14,8 @@ public class Campfire : MonoBehaviour , IInteractable
                     if (item == null)
                         return;
 
-                    var cookedApplePrefab = item.Cooked();                                      
-                    var cookedAppleInstance = GameObject.Instantiate(cookedApplePrefab);
-
-                    player.PlayerInventory.RemoveItem();
-                    cookedAppleInstance.GetComponent<CookedApple>().Pickup(player);
-
+                    player.SetCookingDuration(item.CookDuration); // 플레이어의 요리 시간 설정
+                    player.stateMachine.ChangeState(player.stateMachine.cookingState); // 플레이어의 상태를
 
                     break;
                 }

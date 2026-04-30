@@ -13,6 +13,7 @@ public class PlayerStateMachine
     public IState fishingState;
     public IState loggingState;
     public IState eatingState;
+    public IState cookingState;
 
     public PlayerStateMachine(Player player)
     {
@@ -22,6 +23,7 @@ public class PlayerStateMachine
         fishingState = new FishingState(player);
         loggingState = new LoggingState(player);
         eatingState = new EatingState(player);
+        cookingState = new CookingState(player);
         
         currentState = idleState;
         currentState.Enter();
