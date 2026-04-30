@@ -7,5 +7,7 @@ public enum ItemType
     Plant,
     Fish,
     Bucket,
+    CookedApple,
+    CookedFish
 
 }
