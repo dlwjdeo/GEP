@@ -20,11 +20,12 @@ public class Campfire : MonoBehaviour , IInteractable
             //========¶¿°¨ ³Ö±â==========
             case ItemType.Plant:
                 {
+                    GameManager.Instance.IncreaseFireHealth(10.0f);
                     break;
                 }
             case ItemType.Wood:
-                {   
-
+                {
+                    GameManager.Instance.IncreaseFireHealth(30.0f);
                     break;
                 }
             default:
