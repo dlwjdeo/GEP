@@ -1,13 +1,27 @@
 
 using UnityEngine;
 
-public class Plant : Item, IPickupable
+public class Plant : Item, IPickupable,IInteractable
 {
+
+    public void Interact(Player player)
+    {
+        if (player.PlayerInventory.GetCurrentItemType() == ItemType.None)  //ë§Œì•½ ë§¨ì†ì´ë¼ë©´ ìˆ˜ë¦¬
+        {
+            //ìˆ˜ë¦¬
+            return;
+        }
+        //ì—¬ê¸°ì„œë¶€í„´ ì œì‘
+
+        var CM = GameManager.Instance.CraftManager;
+        CM.Craft(player.PlayerInventory.GetCurrentItem(), this, player);
+
+    }
     public void Pickup(Player player)
     {
-        if (player.PlayerInventory.HasItem()) return; // ÀÌ¹Ì ¾ÆÀÌÅÛÀÌ ÀÖ´Â °æ¿ì ÇÈ¾÷ ºÒ°¡
+        if (player.PlayerInventory.HasItem()) return; // ì´ë¯¸ ì•„ì´í…œì´ ìˆëŠ” ê²½ìš° í”½ì—… ë¶ˆê°€
         player.PlayerInventory.SetCurrentItem(gameObject);
-        gameObject.transform.SetParent(player.transform); // ÇÃ·¹ÀÌ¾îÀÇ ÀÚ½ÄÀ¸·Î ¼³Á¤ÇÏ¿© ÇÔ²² ÀÌµ¿ÇÏµµ·Ï ÇÔ
-        gameObject.transform.localPosition = Vector3.up; // ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡¿¡ ¾ÆÀÌÅÛ
+        gameObject.transform.SetParent(player.transform); // í”Œë ˆì´ì–´ì˜ ìì‹ìœ¼ë¡œ ì„¤ì •í•˜ì—¬ í•¨ê»˜ ì´ë™í•˜ë„ë¡ í•¨
+        gameObject.transform.localPosition = Vector3.up; // í”Œë ˆì´ì–´ì˜ ìœ„ì¹˜ì— ì•„ì´í…œ
     }
 }

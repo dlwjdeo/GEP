@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4109914016037138487}
   - component: {fileID: 1801179074254986229}
   - component: {fileID: 4820942576633575064}
-  - component: {fileID: 4811271125160976454}
+  - component: {fileID: 1492067490395542697}
   m_Layer: 6
   m_Name: Fish
   m_TagString: Untagged
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e9a7dc3c84739cf45b25b6fdae379d60, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -106,7 +106,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4811271125160976454
+--- !u!114 &1492067490395542697
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,7 +115,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5396189775039493088}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fb2024cb5b111a44b654ecedf086b56, type: 3}
+  m_Script: {fileID: 11500000, guid: 192054b411c2bcb4bbc0b21f28a90ea7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 3
+  itemType: 5
+  fillAmount: 40
+  eatDuration: 2
+  cookDuration: 3
+  cookedFish: {fileID: 1571671714708531131, guid: 0383ea0618777c44b836a64396fd24a3, type: 3}

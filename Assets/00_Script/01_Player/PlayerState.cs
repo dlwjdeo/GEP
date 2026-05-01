@@ -98,7 +98,8 @@ public class FishingState : IState
         else
         {
             // 낚시 완료 처리
-            GameManager.Instance.FishingManager.GetRandomFishingItem()?.GetComponent<IPickupable>()?.Pickup(player); // 낚시로 얻은 아이템을 플레이어가 픽업
+            var item = GameObject.Instantiate(GameManager.Instance.FishingManager.GetRandomFishingItem());
+            item.GetComponent<IPickupable>()?.Pickup(player);
             player.stateMachine.ChangeState(player.stateMachine.idleState);
         }
     }

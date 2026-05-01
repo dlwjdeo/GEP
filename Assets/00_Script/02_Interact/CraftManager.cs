@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CraftManager : MonoBehaviour
 {
-    // Àç·á ¼ø¼­°¡ ¹Ù²î¾îµµ °°Àº ·¹½ÃÇÇ·Î Ã³¸®ÇÏ±â À§ÇØ ºñ±³ÀÚ »ç¿ë
+    // ì¬ë£Œ ìˆœì„œê°€ ë°”ë€Œì–´ë„ ê°™ì€ ë ˆì‹œí”¼ë¡œ ì²˜ë¦¬í•˜ê¸° ìœ„í•´ ë¹„êµì ì‚¬ìš©
     private Dictionary<(ItemType, ItemType), Func<Player, bool>> _recipeTable
         = new Dictionary<(ItemType, ItemType), Func<Player, bool>>(new RecipeItemTypeComparer());
     [SerializeField]
@@ -15,7 +15,7 @@ public class CraftManager : MonoBehaviour
 
     private void Start()
     {
-        // ¿¹: ³ª¹« + Ã¶ = ³¬½Ã ÇØ±İ
+        // ì˜ˆ: ë‚˜ë¬´ + ì²  = ë‚šì‹œ í•´ê¸ˆ
         _recipeTable.Add((ItemType.Wood, ItemType.Plant), player => UnlockFishing(player));
         _recipeTable.Add((ItemType.Iron, ItemType.Iron), player => CraftBucket(player));
         _recipeTable.Add((ItemType.Wood, ItemType.Iron), player => UnlockAxe(player));
@@ -23,7 +23,7 @@ public class CraftManager : MonoBehaviour
 
 
 
-    //Àç·á ¾ÆÀÌÅÛµéÀÇ Á¤È®ÇÑ ÆÄ±« Å¸ÀÌ¹ÖÀ» Àç±â À§ÇØ ³»ºÎ ÀÌº¥Æ®ÇÔ¼ö·Î Á¦¾î
+    //ì¬ë£Œ ì•„ì´í…œë“¤ì˜ ì •í™•í•œ íŒŒê´´ íƒ€ì´ë°ì„ ì¬ê¸° ìœ„í•´ ë‚´ë¶€ ì´ë²¤íŠ¸í•¨ìˆ˜ë¡œ ì œì–´
     private event Action OnCraftCompleted;
     private void Awake()
     {
@@ -51,21 +51,21 @@ public class CraftManager : MonoBehaviour
 
         if (_recipeTable.TryGetValue(key, out var craftFunc))
         {
-            Debug.Log("Á¦ÀÛ¼º°ø");
+            Debug.Log("ì œì‘ì„±ê³µ");
             _tagetItem = targetItem;
             _hodItem = holdItem;
             return craftFunc.Invoke(player);
 
         }
 
-        Debug.Log("·¹½ÃÇÇ ¾øÀ½");
+        Debug.Log("ë ˆì‹œí”¼ ì—†ìŒ");
         return false;
     }
 
     private bool UnlockAxe(Player player)
     {   
 
-        //¹ú¸ñ ¼Óµµ Áõ°¡
+        //ë²Œëª© ì†ë„ ì¦ê°€
         var LD = player.loggingDuration;
         player.SetLoggingDuration(LD * 0.6f);
 
@@ -98,7 +98,7 @@ public class CraftManager : MonoBehaviour
     }
 }
 
-// Àç·á ¼ø¼­°¡ ´Ş¶óµµ °°Àº Å°°ªÃ³·³ Ãë±Ş
+// ì¬ë£Œ ìˆœì„œê°€ ë‹¬ë¼ë„ ê°™ì€ í‚¤ê°’ì²˜ëŸ¼ ì·¨ê¸‰
 public class RecipeItemTypeComparer : IEqualityComparer<(ItemType, ItemType)>
 {
     public bool Equals((ItemType, ItemType) x, (ItemType, ItemType) y)

@@ -28,6 +28,8 @@ public class Pond : MonoBehaviour , IInteractable
         else if(itemType==ItemType.None && player.PlayerInventory.isUnlockFishing)  //손이 비어있으면서 낚시대가 해금
         {
             //낚시
+            Debug.Log("낚시");
+            player.SetFishingDuration(2.0f);
             player.stateMachine.ChangeState(player.stateMachine.fishingState);
             return;
         }
