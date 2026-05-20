@@ -18,7 +18,8 @@ public class Player : MonoBehaviour
     public GameObject FowardGameObject { get; private set; }
 
     public PlayerStateMachine stateMachine;
-
+    private Comparer comparer;
+    public Comparer Comparer => comparer;
     public Vector3 movementInput { get; private set; }
     public float fishingDuration { get; private set; }
     public float loggingDuration { get; private set; }
@@ -27,6 +28,14 @@ public class Player : MonoBehaviour
 
     public void Awake()
     {
+        if (playerInventory == null)
+            playerInventory = GetComponent<PlayerInventory>();
+
+        if (playerMovement == null)
+            playerMovement = GetComponent<PlayerMovement>();
+
+        comparer = new Comparer(this);
+
         stateMachine = new PlayerStateMachine(this);
     }
 
@@ -36,7 +45,6 @@ public class Player : MonoBehaviour
         
         stateMachine.Update();
         FowardGameObject = CheckForward();
-        
         // 입력 처리 후 각종 행동 처리
         if(FowardGameObject != null)
         {
@@ -61,7 +69,10 @@ public class Player : MonoBehaviour
                 eatable.Eat(this);
             }
         }
-
+        if (comparer != null)
+        {
+            Debug.Log(comparer.CheckAllInteractable(playerInventory.GetCurrentItem(), FowardGameObject));
+        }
     }
 
     private GameObject CheckForward()

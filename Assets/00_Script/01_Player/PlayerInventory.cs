@@ -28,7 +28,10 @@ public class PlayerInventory : MonoBehaviour
 
     public Item GetCurrentItem()
     {
-        var item=currentItemObject.GetComponent<Item>();
+        if (currentItemObject == null)
+            return null;
+
+        var item = currentItemObject.GetComponent<Item>();
         if (item == null)
             return null;
         return item;

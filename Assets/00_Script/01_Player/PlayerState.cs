@@ -59,6 +59,7 @@ public class MoveState : IState
         if (player.movementInput.magnitude > 0.1f)
         {
             player.PlayerMovement.Move(player.movementInput);
+
         }
     }
 
