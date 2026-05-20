@@ -8,6 +8,7 @@ public enum ItemType
     Fish,
     Bucket,
     CookedApple,
-    CookedFish
+    CookedFish,
+    Tree,
 
 }

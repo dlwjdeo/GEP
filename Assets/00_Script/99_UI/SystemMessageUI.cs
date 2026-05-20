@@ -1,54 +1,87 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
 public class SystemMessageUI : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI systemMessageText;
-    public string CurrentMessage { get; private set; }
-    public string zKeyMessage;
-    public string xKeyMessage;
-    public string cKeyMessage;
+    [SerializeField] private TextMeshPro messageText;   // 3D TextMeshPro
+    [SerializeField] private float displayDuration = 3f;
 
-    public void Start()
+    public string currentMessage { get; private set; }
+
+    private Camera mainCam;
+    private Player player;
+    private GameObject currentTarget;
+    private void Awake()
     {
-        UpdateMessage();
-    }
-    public void ChangeZKeyMessage(string message)
-    {
-        zKeyMessage = message;
-        UpdateMessage();
-    }
-    public void ChangeXKeyMessage(string message)
-    {
-        xKeyMessage = message;
-        UpdateMessage();
-    }
-    public void ChangeCKeyMessage(string message)
-    {
-        cKeyMessage = message;
-        UpdateMessage();
-    }
-    public void ShowMessage(string message)
-    {
-        CurrentMessage = message;
-        systemMessageText.text = message;
-        systemMessageText.gameObject.SetActive(true);
+        mainCam = Camera.main;
+        player = FindObjectOfType<Player>();
+        messageText.gameObject.SetActive(false);
     }
 
-    public void UpdateMessage()
+    private void LateUpdate()
     {
-        CurrentMessage = zKeyMessage + "  " + xKeyMessage + "  " + cKeyMessage;
-        systemMessageText.text = CurrentMessage;
-        if(string.IsNullOrWhiteSpace(CurrentMessage))
+        if (mainCam == null) return;
+        if (currentTarget != null)
         {
-            systemMessageText.gameObject.SetActive(false);
-            Debug.Log("SystemMessageUI: No message to display.");
+            messageText.transform.position = currentTarget.transform.position + new Vector3(0, 2f, 0);
+        }
+        messageText.transform.rotation = Quaternion.LookRotation(transform.position - mainCam.transform.position);
+    }
+
+    void OnEnable()
+    {
+        if(player != null)
+        {
+            player.OnChangeForwardGameObject += ShowMessage;
+        }
+    }
+
+    void OnDisable()
+    {
+        if(player != null)
+        {
+            player.OnChangeForwardGameObject -= ShowMessage;
+        }
+    }
+
+    public void ShowMessage(string message, GameObject targetObject)
+    {
+        if(player.PlayerInventory.GetCurrentItemType() == ItemType.Apple && targetObject == null)
+        {
+            targetObject = player.gameObject;
         }
         else
         {
-            systemMessageText.gameObject.SetActive(true);
+            if(targetObject != null)
+            {
+                currentTarget = targetObject;
+            }
+            else
+            {
+                currentTarget = gameObject;
+            }
         }
+        messageText.transform.rotation = Quaternion.LookRotation(transform.position - mainCam.transform.position);
+        messageText.transform.localPosition = new Vector3(0, 2f, 0);
+        ShowMessage(message);
+    }
+
+    public void ShowMessage(string message)
+    {
+        currentMessage = message;
+        messageText.text = message;
+        messageText.gameObject.SetActive(true);
+    }
+
+    public void SetPosition(Vector3 worldPosition)
+    {
+        transform.position = worldPosition;
+    }
+
+    public void Hide()
+    {
+        messageText.transform.SetParent(transform);
+        messageText.gameObject.SetActive(false);
     }
 }

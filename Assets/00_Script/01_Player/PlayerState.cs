@@ -139,6 +139,13 @@ public class LoggingState : IState
         else
         {
             // 나무 베기 완료 처리
+            if (player.prefabToSpawn != null)
+            {
+                Debug.Log("나무 베기 완료! 통나무 획득!");
+                GameObject.Instantiate(player.prefabToSpawn, player.FowardGameObject.transform.position + Vector3.forward, Quaternion.identity);
+                GameObject.Destroy(player.FowardGameObject);
+                player.SetPrefabToSpawn(null);
+            }
             player.stateMachine.ChangeState(player.stateMachine.idleState);
         }
     }

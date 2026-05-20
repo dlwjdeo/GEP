@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,6 +27,11 @@ public class Player : MonoBehaviour
     public float eatingDuration { get; private set; }
     public float cookingDuration { get; private set; }
 
+    public GameObject prefabToSpawn { get; private set; }
+
+    public Action<string, GameObject> OnChangeForwardGameObject;
+    public Action OnPressedInteract;
+
     public void Awake()
     {
         if (playerInventory == null)
@@ -37,6 +43,8 @@ public class Player : MonoBehaviour
         comparer = new Comparer(this);
 
         stateMachine = new PlayerStateMachine(this);
+
+        loggingDuration = 3f;
     }
 
     public void Update()
@@ -45,6 +53,7 @@ public class Player : MonoBehaviour
         
         stateMachine.Update();
         FowardGameObject = CheckForward();
+        OnChangeForwardGameObject?.Invoke(comparer.CheckAllInteractable(playerInventory.GetCurrentItem(), FowardGameObject), FowardGameObject);
         // 입력 처리 후 각종 행동 처리
         if(FowardGameObject != null)
         {
@@ -52,6 +61,7 @@ public class Player : MonoBehaviour
             {
                 if(FowardGameObject.TryGetComponent<IInteractable>(out var interactable))
                 {
+                    OnPressedInteract?.Invoke(); //
                     interactable.Interact(this);
                 }
             }
@@ -119,4 +129,6 @@ public class Player : MonoBehaviour
     public void SetLoggingDuration(float duration) => loggingDuration = duration;   
     public void SetEatingDuration(float duration) => eatingDuration = duration;
     public void SetCookingDuration(float duration) => cookingDuration = duration;
+
+    public void SetPrefabToSpawn(GameObject prefab) => prefabToSpawn = prefab;
 }
