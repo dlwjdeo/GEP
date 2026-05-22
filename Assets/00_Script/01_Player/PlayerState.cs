@@ -101,6 +101,7 @@ public class FishingState : IState
             // 낚시 완료 처리
             var item = GameObject.Instantiate(GameManager.Instance.FishingManager.GetRandomFishingItem());
             item.GetComponent<IPickupable>()?.Pickup(player);
+            GameManager.Instance.MissionManager.CompleteMission(MissionType.Fish);
             player.stateMachine.ChangeState(player.stateMachine.idleState);
         }
     }

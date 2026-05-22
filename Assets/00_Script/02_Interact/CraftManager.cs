@@ -72,7 +72,7 @@ public class CraftManager : MonoBehaviour
         _hodItem = holdItem;
         _tagetItem = targetItem;
 
-        GameManager.Instance.MissionManager.CompleteMission(1);
+        GameManager.Instance.MissionManager.CompleteMission(MissionType.Craft);
         
         return craftFunc.Invoke(player);
     }

@@ -117,6 +117,11 @@ public class Player : MonoBehaviour
 
     public void DetectMovementInput()
     {
+        if(stateMachine.currentState == stateMachine.fishingState || 
+        stateMachine.currentState == stateMachine.loggingState|| 
+        stateMachine.currentState == stateMachine.eatingState||
+        stateMachine.currentState == stateMachine.cookingState) return;
+        
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 

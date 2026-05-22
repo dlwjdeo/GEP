@@ -8,15 +8,14 @@ public class MissionManager : MonoBehaviour
     private List<Mission> missions = new List<Mission>();
 
     private Dictionary<int, MissionSlot> missionSlotTable = new Dictionary<int, MissionSlot>();
+    private Dictionary<MissionType, MissionSlot> missionSlotByType = new Dictionary<MissionType, MissionSlot>();
 
     [SerializeField]
     private GameObject missionSlot;
     [SerializeField]
     private VerticalLayoutGroup missionLayout;
 
-
-    
-   
+    public Action<Mission> OnMissionExecuted;
 
     private void Start()
     {
@@ -27,11 +26,14 @@ public class MissionManager : MonoBehaviour
             {
                 ms.Init(mission);
                 missionSlotTable.Add(mission.id, ms);
+
+                if (!missionSlotByType.ContainsKey(mission.type))
+                {
+                    missionSlotByType.Add(mission.type, ms);
+                }
             }
         }
-        missions.Clear();
-
-
+        //missions.Clear();
     }
 
     public void CompleteMission(int id)
@@ -40,12 +42,29 @@ public class MissionManager : MonoBehaviour
         {
             if (slot.mission.isCompleted)
                 return;
-            slot.mission.isCompleted = true;
-            slot.textMeshPro.alpha = 0.1f;
+            ExecuteMission(slot.mission);
         }
-
-        //여기에 이벤트함수 구독해서 연출 코루틴 실행
     }
 
+    public void CompleteMission(MissionType type)
+    {
+        if (missionSlotByType.TryGetValue(type, out MissionSlot slot))
+        {
+            if (slot.mission.isCompleted)
+                return;
+            ExecuteMission(slot.mission);
+        }
+    }
 
+    public void ExecuteMission(Mission mission)
+    {
+        OnMissionExecuted?.Invoke(mission);
+    }
+}
+
+public enum MissionType
+{
+    Craft,
+    Fish,
+    Chop,
 }
