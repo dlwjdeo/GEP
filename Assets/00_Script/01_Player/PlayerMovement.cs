@@ -7,11 +7,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float rotationSpeed = 10f;
     private float currentMoveSpeed;
-
+    private Player _player;
     public float MoveSpeed => moveSpeed;
 
     private void Awake()
     {
+        _player = GetComponent<Player>();
         currentMoveSpeed = moveSpeed;
     }
 
@@ -25,6 +26,10 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 movement = direction.normalized * currentMoveSpeed * Time.deltaTime;
         transform.position += movement;
+        if(_player != null)
+        {
+            _player.RefreshForwardTarget();
+        }
     }
 
     public void SetMoveSpeed(float newSpeed)

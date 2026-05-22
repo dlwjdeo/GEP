@@ -24,6 +24,8 @@ public class Comparer
             return "Cook";
         if (checkFishing(itemType, targetObj))
             return "Fishing";
+        if (checkBurning(itemType, targetObj))
+            return "Burning";
         if (checkLogging(itemType, targetObj))
             return "Logging";
         if (checkRepair(itemType, targetObj))
@@ -74,7 +76,11 @@ public class Comparer
 
     private bool checkLogging(ItemType itemType, GameObject targetObj)
     {
-        //return itemType == ItemType.None && targetObj.TryGetComponent<Tree>(out _);
-        return false;
+        return itemType == ItemType.None && targetObj.TryGetComponent<Tree>(out _);
+    }
+
+    private bool checkBurning(ItemType itemType, GameObject targetObj)
+    {
+        return itemType == ItemType.Wood && targetObj.TryGetComponent<Campfire>(out _);
     }
 }

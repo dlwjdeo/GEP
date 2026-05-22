@@ -52,8 +52,7 @@ public class Player : MonoBehaviour
         DetectMovementInput();
         
         stateMachine.Update();
-        FowardGameObject = CheckForward();
-        OnChangeForwardGameObject?.Invoke(comparer.CheckAllInteractable(playerInventory.GetCurrentItem(), FowardGameObject), FowardGameObject);
+        
         // 입력 처리 후 각종 행동 처리
         if(FowardGameObject != null)
         {
@@ -63,6 +62,7 @@ public class Player : MonoBehaviour
                 {
                     OnPressedInteract?.Invoke(); //
                     interactable.Interact(this);
+                    
                 }
             }
         }
@@ -70,6 +70,7 @@ public class Player : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Z))
         {
             HandlePickupOrDrop();
+          
         }
 
         if(Input.GetKeyDown(KeyCode.C))
@@ -79,10 +80,7 @@ public class Player : MonoBehaviour
                 eatable.Eat(this);
             }
         }
-        if (comparer != null)
-        {
-            Debug.Log(comparer.CheckAllInteractable(playerInventory.GetCurrentItem(), FowardGameObject));
-        }
+      
     }
 
     private GameObject CheckForward()
@@ -123,6 +121,16 @@ public class Player : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
 
         movementInput = new Vector3(horizontal, 0f, vertical).normalized;
+    }
+
+    public void RefreshForwardTarget()
+    {
+        FowardGameObject = CheckForward();
+        OnChangeForwardGameObject?.Invoke(
+            comparer.CheckAllInteractable(playerInventory.GetCurrentItem(), FowardGameObject),
+            FowardGameObject
+        );
+      
     }
 
     public void SetFishingDuration(float duration) => fishingDuration = duration;

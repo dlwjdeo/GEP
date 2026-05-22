@@ -13,7 +13,7 @@ public class CraftManager : MonoBehaviour
     private Item _hodItem;
     private Item _tagetItem;
 
-    private event Action OnCraftCompleted;
+    private event Action<Player> OnCraftCompleted;
 
     private void Awake()
     {
@@ -33,10 +33,10 @@ public class CraftManager : MonoBehaviour
         OnCraftCompleted -= HandleCraftCompleted;
     }
 
-    private void HandleCraftCompleted()
+    private void HandleCraftCompleted(Player player)
     {
         if (_hodItem != null)
-            Destroy(_hodItem.gameObject);
+            player.PlayerInventory.RemoveItem();
 
         if (_tagetItem != null)
             Destroy(_tagetItem.gameObject);
@@ -72,6 +72,8 @@ public class CraftManager : MonoBehaviour
         _hodItem = holdItem;
         _tagetItem = targetItem;
 
+        GameManager.Instance.MissionManager.CompleteMission(1);
+        
         return craftFunc.Invoke(player);
     }
 
@@ -81,7 +83,7 @@ public class CraftManager : MonoBehaviour
         var LD = player.loggingDuration;
         player.SetLoggingDuration(LD * 0.6f);
 
-        OnCraftCompleted?.Invoke();
+        OnCraftCompleted?.Invoke(player);
         return true;
     }
 
@@ -94,7 +96,7 @@ public class CraftManager : MonoBehaviour
 
         inven.isUnlockFishing = true;
 
-        OnCraftCompleted?.Invoke();
+        OnCraftCompleted?.Invoke(player);
         return true;
     }
 
@@ -103,7 +105,7 @@ public class CraftManager : MonoBehaviour
         var spawnPosition = player.FowardGameObject.transform.position;
         Instantiate(bucketObj, spawnPosition, Quaternion.identity);
 
-        OnCraftCompleted?.Invoke();
+        OnCraftCompleted?.Invoke(player);
         return true;
     }
 }

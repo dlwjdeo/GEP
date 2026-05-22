@@ -1,87 +1,100 @@
-using System.Collections;
 using UnityEngine;
 using TMPro;
 
 public class SystemMessageUI : MonoBehaviour
 {
-    [SerializeField] private TextMeshPro messageText;   // 3D TextMeshPro
-    [SerializeField] private float displayDuration = 3f;
+    [SerializeField] private TextMeshPro messageText;
+    [SerializeField] private float yOffset = 2f;
+    private Vector3 fixedWorldEulerAngles = new Vector3(0f, 0f, 0f);
 
     public string currentMessage { get; private set; }
 
-    private Camera mainCam;
     private Player player;
-    private GameObject currentTarget;
+    private GameObject followTarget;
+    private bool shouldFollowTarget;
+
     private void Awake()
     {
-        mainCam = Camera.main;
         player = FindObjectOfType<Player>();
         messageText.gameObject.SetActive(false);
+        messageText.transform.rotation = Quaternion.Euler(fixedWorldEulerAngles);
     }
 
-    private void LateUpdate()
+    private void OnEnable()
     {
-        if (mainCam == null) return;
-        if (currentTarget != null)
-        {
-            messageText.transform.position = currentTarget.transform.position + new Vector3(0, 2f, 0);
-        }
-        messageText.transform.rotation = Quaternion.LookRotation(transform.position - mainCam.transform.position);
-    }
-
-    void OnEnable()
-    {
-        if(player != null)
+        if (player != null)
         {
             player.OnChangeForwardGameObject += ShowMessage;
         }
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
-        if(player != null)
+        if (player != null)
         {
             player.OnChangeForwardGameObject -= ShowMessage;
         }
     }
 
-    public void ShowMessage(string message, GameObject targetObject)
+    private void LateUpdate()
     {
-        if(player.PlayerInventory.GetCurrentItemType() == ItemType.Apple && targetObject == null)
+        if (!messageText.gameObject.activeSelf) return;
+        if (!shouldFollowTarget) return;
+        if (followTarget == null)
         {
-            targetObject = player.gameObject;
+            Hide();
+            return;
         }
-        else
-        {
-            if(targetObject != null)
-            {
-                currentTarget = targetObject;
-            }
-            else
-            {
-                currentTarget = gameObject;
-            }
-        }
-        messageText.transform.rotation = Quaternion.LookRotation(transform.position - mainCam.transform.position);
-        messageText.transform.localPosition = new Vector3(0, 2f, 0);
-        ShowMessage(message);
+
+        messageText.transform.position = followTarget.transform.position + new Vector3(0f, yOffset, 0f);
+        messageText.transform.rotation = Quaternion.Euler(fixedWorldEulerAngles);
     }
 
-    public void ShowMessage(string message)
+    public void ShowMessage(string message, GameObject targetObject)
     {
+        if (string.IsNullOrEmpty(message))
+        {
+            Hide();
+            return;
+        }
+
         currentMessage = message;
         messageText.text = message;
         messageText.gameObject.SetActive(true);
-    }
 
-    public void SetPosition(Vector3 worldPosition)
-    {
-        transform.position = worldPosition;
+        if (player.PlayerInventory.GetCurrentItemType() == ItemType.Apple)
+        {
+            followTarget = player.gameObject;
+            shouldFollowTarget = true;
+            messageText.transform.position = followTarget.transform.position + new Vector3(0f, yOffset, 0f);
+        }
+        else
+        {
+            shouldFollowTarget = false;
+            followTarget = null;
+
+            Vector3 basePosition;
+
+            if (targetObject != null)
+            {
+                basePosition = targetObject.transform.position;
+            }
+            else
+            {
+                basePosition = transform.position;
+            }
+
+            messageText.transform.position = basePosition + new Vector3(0f, yOffset, 0f);
+        }
+
+        messageText.transform.rotation = Quaternion.Euler(fixedWorldEulerAngles);
     }
 
     public void Hide()
     {
-        messageText.transform.SetParent(transform);
+        currentMessage = string.Empty;
+        followTarget = null;
+        shouldFollowTarget = false;
         messageText.gameObject.SetActive(false);
     }
 }

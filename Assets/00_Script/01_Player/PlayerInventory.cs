@@ -7,10 +7,11 @@ public class PlayerInventory : MonoBehaviour
 {
     public GameObject currentItemObject; // 현재 들고 있는 아이템의 게임 오브젝트 참조
     public bool isUnlockFishing;
-
+    private Player _player;
 
     private void Start()
-    {
+    {   
+        _player = GetComponent<Player>();
         isUnlockFishing = false;
     }
     public ItemType GetCurrentItemType()
@@ -40,6 +41,8 @@ public class PlayerInventory : MonoBehaviour
     public void SetCurrentItem(GameObject itemObject)
     {
         currentItemObject = itemObject;
+        if (_player != null)
+            _player.RefreshForwardTarget();
     }
     public bool HasItem()
     {
@@ -53,6 +56,8 @@ public class PlayerInventory : MonoBehaviour
             currentItemObject.transform.SetParent(null);
             currentItemObject.transform.position = transform.position + transform.forward; // 플레이어 앞에 배치
             currentItemObject = null; // 인벤토리에서 아이템 제거
+            if (_player != null)
+                _player.RefreshForwardTarget();
         }
     }
     
@@ -62,6 +67,8 @@ public class PlayerInventory : MonoBehaviour
         {
             Destroy(currentItemObject); // 아이템 오브젝트 제거
             currentItemObject = null; // 인벤토리에서 아이템 제거
+            if (_player != null)
+                _player.RefreshForwardTarget();
         }
     }
 }

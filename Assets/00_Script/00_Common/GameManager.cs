@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -9,6 +10,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private FishingManager fishingManager;
     public FishingManager FishingManager => fishingManager;
+
+    [SerializeField] private MissionManager missionManager;
+    public MissionManager MissionManager => missionManager;
 
     [SerializeField] private FigureUI figureUI;
 
@@ -35,6 +39,7 @@ public class GameManager : MonoBehaviour
     public float RocketMaxHealth => rocketMaxHealth;
     public float RocketCurrentHealth => rocketCurrentHealth;
 
+
     private void Awake()
     {
         if (Instance == null)
@@ -50,7 +55,8 @@ public class GameManager : MonoBehaviour
     }
 
     private void Start()
-    {
+    {   
+
         RefreshAllUI();
     }
 
