@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: M1 2
   m_EditorClassIdentifier: 
   id: 3
+  type: 2
   content: Text Mission
   isCompleted: 0
