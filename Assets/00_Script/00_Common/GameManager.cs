@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private MissionManager missionManager;
     public MissionManager MissionManager => missionManager;
+
+    [SerializeField] private SpawnManager spawnManager;
+    public SpawnManager SpawnManager => spawnManager;
 
     [SerializeField] private FigureUI figureUI;
 
@@ -27,7 +30,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float fireDecreaseRate = 1f;
 
     [Header("Rocket Stats")]
-    [SerializeField] private float rocketMaxHealth = 2000f;
+    [SerializeField] private float rocketMaxHealth = 200f;
     [SerializeField] private float rocketCurrentHealth = 0f;
 
     public float PlayerMaxHealth => playerMaxHealth;
@@ -39,6 +42,7 @@ public class GameManager : MonoBehaviour
     public float RocketMaxHealth => rocketMaxHealth;
     public float RocketCurrentHealth => rocketCurrentHealth;
 
+   
 
     private void Awake()
     {
@@ -134,6 +138,11 @@ public class GameManager : MonoBehaviour
         {
             figureUI.RefreshRocket(rocketCurrentHealth, rocketMaxHealth);
         }
+
+        if(rocketCurrentHealth>=rocketMaxHealth)
+        {
+            GameClear();
+        }
     }
 
     private void RefreshAllUI()
@@ -146,8 +155,17 @@ public class GameManager : MonoBehaviour
         figureUI.RefreshAll();
     }
 
+    public void GameClear()
+    {
+        figureUI.PopupResult("GameClear");
+    }
     public void GameOver()
     {
-        Debug.Log("Game Over!");
+        figureUI.PopupResult("Game Over");
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

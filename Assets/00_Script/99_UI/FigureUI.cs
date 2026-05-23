@@ -1,4 +1,7 @@
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FigureUI : MonoBehaviour
 {
@@ -8,6 +11,9 @@ public class FigureUI : MonoBehaviour
     [SerializeField] private RectTransform hungerBar;
     [SerializeField] private RectTransform fireBar;
     [SerializeField] private RectTransform rocketBar;
+
+    [SerializeField] private GameObject resultPanel;
+    private Button restartButton; 
 
     private float hungerMaxWidth;
     private float fireMaxWidth;
@@ -23,6 +29,9 @@ public class FigureUI : MonoBehaviour
     private void Start()
     {
         RefreshAll();
+        restartButton=GetComponentInChildren<Button>();
+        restartButton.onClick.AddListener(gameManager.Restart);
+        resultPanel.SetActive(false);
     }
 
     public void RefreshAll()
@@ -57,4 +66,15 @@ public class FigureUI : MonoBehaviour
         size.x = maxWidth * ratio;
         targetBar.sizeDelta = size;
     }
+
+    public void PopupResult(string  message)
+    {
+        var tmp = resultPanel.GetComponentInChildren<TextMeshProUGUI>();
+        if(tmp!=null)
+        {
+            tmp.text = message;
+            resultPanel.SetActive(true);
+        }
+    }
+ 
 }

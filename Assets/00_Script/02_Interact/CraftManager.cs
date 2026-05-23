@@ -103,8 +103,8 @@ public class CraftManager : MonoBehaviour
     private bool CraftBucket(Player player)
     {
         var spawnPosition = player.FowardGameObject.transform.position;
-        Instantiate(bucketObj, spawnPosition, Quaternion.identity);
-
+        var bucket = Instantiate(bucketObj, spawnPosition, Quaternion.identity);
+        
         OnCraftCompleted?.Invoke(player);
         return true;
     }
