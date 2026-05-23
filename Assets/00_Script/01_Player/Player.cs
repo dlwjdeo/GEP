@@ -129,7 +129,8 @@ public class Player : MonoBehaviour
     }
 
     public void RefreshForwardTarget()
-    {
+    {   
+        
         FowardGameObject = CheckForward();
         OnChangeForwardGameObject?.Invoke(
             comparer.CheckAllInteractable(playerInventory.GetCurrentItem(), FowardGameObject),
