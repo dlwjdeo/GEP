@@ -14,6 +14,7 @@ public class PlayerStateMachine
     public IState loggingState;
     public IState eatingState;
     public IState cookingState;
+    public IState repairState;
 
     public PlayerStateMachine(Player player)
     {
@@ -24,6 +25,7 @@ public class PlayerStateMachine
         loggingState = new LoggingState(player);
         eatingState = new EatingState(player);
         cookingState = new CookingState(player);
+        repairState = new RepairState(player);
         
         currentState = idleState;
         currentState.Enter();

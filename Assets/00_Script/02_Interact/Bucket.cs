@@ -13,4 +13,5 @@ public class Bucket : Item,IPickupable
         gameObject.transform.SetParent(player.transform); // 플레이어의 자식으로 설정하여 함께 이동하도록 함
         gameObject.transform.localPosition = Vector3.up; // 플레이어의 위치에 아이템
     }
+
 }

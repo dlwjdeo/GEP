@@ -121,4 +121,6 @@ MonoBehaviour:
   itemType: 1
   fillAmount: 20
   eatDuration: 2
+  cookDuration: 1
   cookedApple: {fileID: 5457647066888634291, guid: 953caa611261686448eef7a8096380cb, type: 3}
+  TreePrefab: {fileID: 7692962083045931367, guid: ddc5dfd6546c9a449bd9717a56857110, type: 3}

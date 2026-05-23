@@ -26,8 +26,9 @@ public class Player : MonoBehaviour
     public float loggingDuration { get; private set; }
     public float eatingDuration { get; private set; }
     public float cookingDuration { get; private set; }
+    public float repairDuration { get; private set; }
 
-    public GameObject prefabToSpawn { get; private set; }
+    public GameObject[] prefabToSpawn { get; private set; }
 
     public Action<string, GameObject> OnChangeForwardGameObject;
     public Action OnPressedInteract;
@@ -63,6 +64,16 @@ public class Player : MonoBehaviour
                     OnPressedInteract?.Invoke(); //
                     interactable.Interact(this);
                     
+                }
+            }
+        }
+        else
+        {
+            if(PlayerInventory.GetCurrentItemType() == ItemType.Apple)
+            {
+                if(Input.GetKeyDown(KeyCode.X) && PlayerInventory.currentItemObject.TryGetComponent<Apple>(out var apple))
+                {
+                    apple.Plant(this);
                 }
             }
         }
@@ -143,6 +154,7 @@ public class Player : MonoBehaviour
     public void SetLoggingDuration(float duration) => loggingDuration = duration;   
     public void SetEatingDuration(float duration) => eatingDuration = duration;
     public void SetCookingDuration(float duration) => cookingDuration = duration;
+    public void SetRepairDuration(float duration) => repairDuration = duration;
 
-    public void SetPrefabToSpawn(GameObject prefab) => prefabToSpawn = prefab;
+    public void SetPrefabToSpawn(GameObject[] prefabs) => prefabToSpawn = prefabs;
 }

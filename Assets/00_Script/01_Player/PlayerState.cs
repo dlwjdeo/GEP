@@ -143,7 +143,9 @@ public class LoggingState : IState
             if (player.prefabToSpawn != null)
             {
                 Debug.Log("나무 베기 완료! 통나무 획득!");
-                GameObject.Instantiate(player.prefabToSpawn, player.FowardGameObject.transform.position + Vector3.forward, Quaternion.identity);
+                GameObject.Instantiate(player.prefabToSpawn[0], player.FowardGameObject.transform.position + Vector3.forward, Quaternion.identity);
+                GameObject.Instantiate(player.prefabToSpawn[1], player.FowardGameObject.transform.position + Vector3.right, Quaternion.identity);
+                GameObject.Instantiate(player.prefabToSpawn[1], player.FowardGameObject.transform.position + Vector3.left, Quaternion.identity);
                 GameObject.Destroy(player.FowardGameObject);
                 player.SetPrefabToSpawn(null);
             }
@@ -239,5 +241,39 @@ public class CookingState : IState
     public void Exit()
     {
         
+    }
+}
+
+public class RepairState : IState
+{
+    private Player player;
+    private float repairDuration;
+    public RepairState(Player player)
+    {
+        this.player = player;
+    }
+    public void Enter()
+    {
+        player.PlayerMovement.SetMoveSpeed(0f);
+        repairDuration = player.repairDuration;
+    }
+
+    public void Update()
+    {
+        if(repairDuration > 0f)
+        {
+            repairDuration -= Time.deltaTime;
+        }
+        else
+        {
+            var rocket = player.FowardGameObject.GetComponent<Rocket>();
+            rocket.Repair(player);
+            player.stateMachine.ChangeState(player.stateMachine.idleState);
+        }
+    }
+
+    public void Exit()
+    {
+        player.PlayerMovement.SetMoveSpeed(player.PlayerMovement.MoveSpeed);
     }
 }

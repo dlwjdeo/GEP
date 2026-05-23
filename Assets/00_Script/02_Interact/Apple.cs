@@ -9,6 +9,7 @@ public class Apple : Item, IInteractable, IPickupable, IEatable, ICookable
     [SerializeField] private float cookDuration = 1f; // 조리하는 데 걸리는 시간
 
     [SerializeField] private GameObject cookedApple;
+    [SerializeField] private GameObject TreePrefab;
 
     public float FillAmount => fillAmount;
     public float CookDuration => cookDuration;
@@ -40,5 +41,13 @@ public class Apple : Item, IInteractable, IPickupable, IEatable, ICookable
         if (cookedApple == null)
             return null;
         return cookedApple;
+    }
+
+    public void Plant(Player player)
+    {
+        if(TreePrefab == null)
+            return;
+        GameObject.Instantiate(TreePrefab, player.transform.position + player.transform.forward, Quaternion.identity);
+        player.PlayerInventory.RemoveItem();
     }
 }

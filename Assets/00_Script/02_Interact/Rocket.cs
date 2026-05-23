@@ -7,6 +7,16 @@ public class Rocket : MonoBehaviour, IInteractable
     public void Interact(Player player)
     {
         var itemType = player.PlayerInventory.GetCurrentItemType();
+        if (itemType == ItemType.Plant || itemType == ItemType.Wood || itemType == ItemType.Iron)
+        {
+            player.SetRepairDuration(2.0f); // 수리하는 데 걸리는 시간 설정
+            player.stateMachine.ChangeState(player.stateMachine.repairState); // 플레이어의 상태를 수리 상태로 변경
+        }
+    }
+
+    public void Repair(Player player)
+    {
+        var itemType = player.PlayerInventory.GetCurrentItemType();
         var manager = GameManager.Instance;
         switch (itemType)
         {
@@ -34,6 +44,6 @@ public class Rocket : MonoBehaviour, IInteractable
         }
 
         player.PlayerInventory.RemoveItem();
-
     }
+
 }

@@ -7,6 +7,7 @@ public class PlayerInventory : MonoBehaviour
 {
     public GameObject currentItemObject; // 현재 들고 있는 아이템의 게임 오브젝트 참조
     public bool isUnlockFishing;
+    public Action OnInventoryChanged;
     private Player _player;
 
     private void Start()
@@ -41,6 +42,7 @@ public class PlayerInventory : MonoBehaviour
     public void SetCurrentItem(GameObject itemObject)
     {
         currentItemObject = itemObject;
+        OnInventoryChanged?.Invoke();
         if (_player != null)
             _player.RefreshForwardTarget();
     }
@@ -55,7 +57,7 @@ public class PlayerInventory : MonoBehaviour
             // 아이템을 플레이어의 위치에 떨어뜨림
             currentItemObject.transform.SetParent(null);
             currentItemObject.transform.position = transform.position + transform.forward; // 플레이어 앞에 배치
-            currentItemObject = null; // 인벤토리에서 아이템 제거
+            SetCurrentItem(null); // 인벤토리에서 아이템 제거
             if (_player != null)
                 _player.RefreshForwardTarget();
         }
@@ -66,7 +68,7 @@ public class PlayerInventory : MonoBehaviour
         if (currentItemObject != null)
         {
             Destroy(currentItemObject); // 아이템 오브젝트 제거
-            currentItemObject = null; // 인벤토리에서 아이템 제거
+            SetCurrentItem(null); // 인벤토리에서 아이템 제거
             if (_player != null)
                 _player.RefreshForwardTarget();
         }
