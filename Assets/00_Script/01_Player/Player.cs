@@ -129,12 +129,6 @@ public class Player : MonoBehaviour
                 bestTarget = targetObject;
             }
         }
-
-        Color debugColor = bestTarget != null ? Color.green : Color.red;
-        Debug.DrawRay(origin, Quaternion.Euler(0f, -fanHalfAngle, 0f) * forward * interactRange, debugColor);
-        Debug.DrawRay(origin, forward * interactRange, debugColor);
-        Debug.DrawRay(origin, Quaternion.Euler(0f, fanHalfAngle, 0f) * forward * interactRange, debugColor);
-
         return bestTarget;
     }
 
