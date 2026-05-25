@@ -59,8 +59,6 @@ public class Player : MonoBehaviour
         {
             if(Input.GetKeyDown(KeyCode.X))
             {
-             
-
                 if(FowardGameObject.TryGetComponent<IInteractable>(out var interactable))
                 {
                     OnPressedInteract?.Invoke(); //

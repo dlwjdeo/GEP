@@ -14,6 +14,8 @@ public class CraftManager : MonoBehaviour
     private Item _tagetItem;
 
     private event Action<Player> OnCraftCompleted;
+    public Action OnAxeCrafted; // 도끼 제작 이벤트
+    public Action OnFishingRodCrafted; // 낚시대 제작 이벤트
 
     private void Awake()
     {
@@ -83,6 +85,8 @@ public class CraftManager : MonoBehaviour
         var LD = player.loggingDuration;
         player.SetLoggingDuration(LD * 0.6f);
 
+        OnAxeCrafted?.Invoke();
+
         OnCraftCompleted?.Invoke(player);
         return true;
     }
@@ -96,6 +100,8 @@ public class CraftManager : MonoBehaviour
 
         inven.isUnlockFishing = true;
 
+        OnFishingRodCrafted?.Invoke();
+        
         OnCraftCompleted?.Invoke(player);
         return true;
     }

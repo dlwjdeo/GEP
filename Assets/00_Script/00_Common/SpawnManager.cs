@@ -179,7 +179,7 @@ public class SpawnManager : MonoBehaviour
         }
         else if (ironSpawnCounter == 5)
         {
-            AddIronSpawnInterval(10.0f); // 아이언 스폰 간격을 10초 늘립니다.
+            AddIronSpawnInterval(15.0f); // 아이언 스폰 간격을 10초 늘립니다.
         }
     }
 
@@ -187,7 +187,11 @@ public class SpawnManager : MonoBehaviour
     {
         plantSpawnCounter += spawnCount;
 
-        if (plantSpawnCounter == 4)
+        if (plantSpawnCounter == 2)
+        {
+            AddPlantSpawnInterval(10.0f); // 식물 스폰 간격을 10초 늘립니다.
+        }
+        else if (plantSpawnCounter == 4)
         {
             AddPlantSpawnInterval(10.0f); // 식물 스폰 간격을 10초 늘립니다.
         }
