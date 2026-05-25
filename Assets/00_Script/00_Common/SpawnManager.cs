@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class SpawnManager : MonoBehaviour
 {   
@@ -31,6 +32,11 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private Iron ironPrefab;
     [SerializeField] private Plant plantPrefab;
 
+    [SerializeField] private float ironSpawnInterval = 10.0f;
+    [SerializeField] private float plantSpawnInterval = 5.0f;
+    private int ironSpawnCounter = 0;
+    private int plantSpawnCounter = 0;
+
     public Transform Rocket => rocket;
     public Transform Pond => pond;
     public Transform Campfire => campfire;
@@ -38,7 +44,8 @@ public class SpawnManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(SpawnRoutine());
+        StartCoroutine(IronSpawnRoutine());
+        StartCoroutine(PlantSpawnRoutine());
     }
 
     public Item Spawn(Item prefab)
@@ -140,15 +147,73 @@ public class SpawnManager : MonoBehaviour
         return candidates[candidates.Count - 1].position;
     }
 
-    private System.Collections.IEnumerator SpawnRoutine()
+    private IEnumerator SpawnRoutine()
     {
         while (true)
         {
             Spawn(ironPrefab);
+            yield return new WaitForSeconds(ironSpawnInterval);
             Spawn(plantPrefab);
-            yield return new WaitForSeconds(3.0f);
+            yield return new WaitForSeconds(plantSpawnInterval);
         }
     }
 
+
+    private void AddIronSpawnInterval(float additionalTime)
+    {
+        ironSpawnInterval += additionalTime;
+    }
+
+    private void AddPlantSpawnInterval(float additionalTime)
+    {
+        plantSpawnInterval += additionalTime;
+    }
+
+    private void IronSpawnControl(int spawnCount)
+    {
+        ironSpawnCounter += spawnCount;
+
+        if (ironSpawnCounter == 5)
+        {
+            AddIronSpawnInterval(10.0f); // 아이언 스폰 간격을 10초 늘립니다.
+        }
+        else if (ironSpawnCounter == 10)
+        {
+            AddIronSpawnInterval(5.0f); // 아이언 스폰 간격을 5초 늘립니다.
+        }
+    }
+
+    private void PlantSpawnControl(int spawnCount)
+    {
+        plantSpawnCounter += spawnCount;
+
+        if (plantSpawnCounter == 5)
+        {
+            AddPlantSpawnInterval(10.0f); // 식물 스폰 간격을 10초 늘립니다.
+        }
+        else if (plantSpawnCounter == 10)
+        {
+            AddPlantSpawnInterval(5.0f); // 식물 스폰 간격을 5초 늘립니다.
+        }
+    }
+
+    private IEnumerator IronSpawnRoutine()
+    {
+        while (true)
+        {
+            Spawn(ironPrefab);
+            IronSpawnControl(1); // 아이언이 스폰될 때마다 카운터를 증가시킵니다
+            yield return new WaitForSeconds(ironSpawnInterval);
+        }
+    }
+    private IEnumerator PlantSpawnRoutine()
+    {
+        while (true)
+        {
+            Spawn(plantPrefab);
+            PlantSpawnControl(1); // 식물이 스폰될 때마다 카운터를 증가시킵니다
+            yield return new WaitForSeconds(plantSpawnInterval);
+        }
+    }
 
 }

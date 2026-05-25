@@ -21,7 +21,7 @@ public class Pond : MonoBehaviour , IInteractable
                 return;
             }
 
-            bucket.isFilled = true;
+            bucket.Fill();
             return;
             //여기서 버킷에 물 채우는 효과
         }

@@ -35,9 +35,13 @@ public class Tree : Item, IInteractable
     {
         if(!isGrown)
         {
-            if(player.PlayerInventory.GetCurrentItemType() == ItemType.Bucket) return; 
-            transform.localScale = Vector3.one; // 나무가 자란 후에는 원래 크기로 설정
-            isGrown = true;
+            Bucket bucket = player.PlayerInventory.GetCurrentItem() as Bucket;
+            if(bucket != null && bucket.isFilled)
+            {
+                bucket.Empty(); // 양동이를 비웁니다.
+                transform.localScale = Vector3.one; // 나무가 자란 후에는 원래 크기로 설정
+                isGrown = true;
+            }
         }
         else
         {

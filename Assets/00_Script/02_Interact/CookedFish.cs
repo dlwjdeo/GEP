@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CookedFish : Item, IPickupable, IEatable
 {
-    [SerializeField] private float fillAmount = 80f; // 체력 회복량
+    [SerializeField] private float fillAmount = 50f; // 체력 회복량
     [SerializeField] private float eatDuration = 2f; // 먹는 데 걸리는 시간
     public float FillAmount => fillAmount;
     public void Eat(Player player)
