@@ -87,11 +87,11 @@ public class FishingState : IState
 
     public void Update()
     {
-        if(player.movementInput.magnitude > 0.1f)
-        {
-            player.stateMachine.ChangeState(player.stateMachine.moveState);
-            return;
-        }
+        //if(player.movementInput.magnitude > 0.1f)
+        //{
+        //    player.stateMachine.ChangeState(player.stateMachine.moveState);
+        //    return;
+        //}
         if(fishingDuration > 0f)
         {
             fishingDuration -= Time.deltaTime;
@@ -129,11 +129,11 @@ public class LoggingState : IState
 
     public void Update()
     {
-        if(player.movementInput.magnitude > 0.1f)
-        {
-            player.stateMachine.ChangeState(player.stateMachine.moveState);
-            return;
-        }
+        //if(player.movementInput.magnitude > 0.1f)
+        //{
+        //    player.stateMachine.ChangeState(player.stateMachine.moveState);
+        //    return;
+        //}
         if(loggingDuration > 0f)
         {
             loggingDuration -= Time.deltaTime;
