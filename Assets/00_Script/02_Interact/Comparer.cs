@@ -81,6 +81,6 @@ public class Comparer
 
     private bool checkBurning(ItemType itemType, GameObject targetObj)
     {
-        return (itemType == ItemType.Wood) || (itemType==ItemType.Plant) && targetObj.TryGetComponent<Campfire>(out _);
+        return ((itemType == ItemType.Wood) || (itemType==ItemType.Plant)) && targetObj.TryGetComponent<Campfire>(out _);
     }
 }
