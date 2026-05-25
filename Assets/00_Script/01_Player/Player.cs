@@ -98,20 +98,44 @@ public class Player : MonoBehaviour
 
     private GameObject CheckForward()
     {
-        Ray ray = new Ray(transform.position, transform.forward);
-        bool isHit = Physics.Raycast(ray, out RaycastHit hit, interactRange, ItemLayer);
+        float fanHalfAngle = 45f;
+        Vector3 origin = transform.position;
+        Vector3 forward = transform.forward;
 
-        Debug.DrawRay(ray.origin, ray.direction * interactRange, isHit ? Color.green : Color.red);
+        GameObject bestTarget = null;
+        float bestDistance = 5f;
+        Transform[] allTransforms = FindObjectsOfType<Transform>();
 
-        if (isHit)
+        foreach (var target in allTransforms)
         {
-            GameObject go = hit.collider.gameObject;
-            if (go != null)
+            if (target == null) continue;
+            if (target == transform) continue;
+
+            GameObject targetObject = target.gameObject;
+            if (((1 << targetObject.layer) & ItemLayer.value) == 0) continue;
+
+            Vector3 toTarget = target.position - origin;
+            toTarget.y = 0f;
+
+            if (toTarget.sqrMagnitude <= Mathf.Epsilon) continue;
+
+            float angle = Vector3.Angle(forward, toTarget);
+            if (angle > fanHalfAngle) continue;
+
+            float distance = toTarget.sqrMagnitude;
+            if (distance < bestDistance)
             {
-                return go;
+                bestDistance = distance;
+                bestTarget = targetObject;
             }
         }
-        return null;
+
+        Color debugColor = bestTarget != null ? Color.green : Color.red;
+        Debug.DrawRay(origin, Quaternion.Euler(0f, -fanHalfAngle, 0f) * forward * interactRange, debugColor);
+        Debug.DrawRay(origin, forward * interactRange, debugColor);
+        Debug.DrawRay(origin, Quaternion.Euler(0f, fanHalfAngle, 0f) * forward * interactRange, debugColor);
+
+        return bestTarget;
     }
 
     private void HandlePickupOrDrop()
