@@ -9,12 +9,7 @@ public class Plant : Item, IPickupable,IInteractable
     private float maxWeight = 0.8f;
     public void Interact(Player player)
     {
-        if (player.PlayerInventory.GetCurrentItemType() == ItemType.None)  //만약 맨손이라면 수리
-        {
-            //수리
-            return;
-        }
-        //여기서부턴 제작
+       
 
         var CM = GameManager.Instance.CraftManager;
         CM.Craft(player.PlayerInventory.GetCurrentItem(), this, player);
