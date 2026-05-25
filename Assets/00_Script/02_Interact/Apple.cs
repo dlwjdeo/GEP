@@ -40,12 +40,16 @@ public class Apple : Item, IInteractable, IPickupable, IEatable, ICookable
     {
         if (cookedApple == null)
             return null;
+    
+
         return cookedApple;
     }
 
     public void Plant(Player player)
     {
         if(TreePrefab == null)
+            return;
+        if (player.stateMachine.currentState == player.stateMachine.eatingState)
             return;
         GameObject.Instantiate(TreePrefab, player.transform.position + player.transform.forward, Quaternion.identity);
         player.PlayerInventory.RemoveItem();

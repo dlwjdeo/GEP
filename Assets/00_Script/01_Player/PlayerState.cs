@@ -124,6 +124,7 @@ public class LoggingState : IState
     public void Enter()
     {
         loggingDuration = player.loggingDuration;
+        player.stateMachine.isStateLocked = true;
     }
 
     public void Update()
@@ -150,6 +151,7 @@ public class LoggingState : IState
                 player.SetPrefabToSpawn(null);
                 GameManager.Instance.MissionManager.CompleteMission(MissionType.Chop);
             }
+            player.stateMachine.isStateLocked = false;
             player.stateMachine.ChangeState(player.stateMachine.idleState);
         }
     }
@@ -168,12 +170,14 @@ public class EatingState : IState
     public EatingState(Player player)
     {
         this.player = player;
+        
     }
 
     public void Enter()
     {
         player.PlayerMovement.SetMoveSpeed(0f);
         eatingDuration = player.eatingDuration;
+        player.stateMachine.isStateLocked = true;
     }
 
     public void Update()
@@ -189,7 +193,7 @@ public class EatingState : IState
             player.PlayerInventory.RemoveItem(); // 아이템 제거
             
             Debug.Log("먹기 완료!");
-
+            player.stateMachine.isStateLocked = false;
             player.stateMachine.ChangeState(player.stateMachine.idleState);
         }
     }
@@ -214,6 +218,7 @@ public class CookingState : IState
     {
         player.PlayerMovement.SetMoveSpeed(0f);
         cookingDuration = player.cookingDuration;
+        player.stateMachine.isStateLocked = true;
     }
 
     public void Update()
@@ -228,13 +233,16 @@ public class CookingState : IState
             GameObject cookedItem = player.PlayerInventory.currentItemObject; // 현재 아이템 가져오기
             if (cookedItem != null && cookedItem.TryGetComponent<ICookable>(out var cookable))
             {
+                
                 cookedItem = cookable.Cooked(); // 요리 완료 처리
+              
                 if (cookedItem != null)
                 {
                     player.PlayerInventory.RemoveItem(); // 기존 아이템 제거
                     GameObject.Instantiate(cookedItem).GetComponent<IPickupable>().Pickup(player); // 요리된 아이템을 플레이어가 픽업
                 }
             }
+            player.stateMachine.isStateLocked = false;
             player.stateMachine.ChangeState(player.stateMachine.idleState);
         }
     }
@@ -249,14 +257,17 @@ public class RepairState : IState
 {
     private Player player;
     private float repairDuration;
+
     public RepairState(Player player)
     {
         this.player = player;
+        
     }
     public void Enter()
     {
         player.PlayerMovement.SetMoveSpeed(0f);
         repairDuration = player.repairDuration;
+        player.stateMachine.isStateLocked = true;
     }
 
     public void Update()
@@ -269,6 +280,7 @@ public class RepairState : IState
         {
             var rocket = player.FowardGameObject.GetComponent<Rocket>();
             rocket.Repair(player);
+            player.stateMachine.isStateLocked = false;
             player.stateMachine.ChangeState(player.stateMachine.idleState);
         }
     }

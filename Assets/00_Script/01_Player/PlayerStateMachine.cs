@@ -16,6 +16,8 @@ public class PlayerStateMachine
     public IState cookingState;
     public IState repairState;
 
+    public bool isStateLocked = false;
+
     public PlayerStateMachine(Player player)
     {
         this.player = player;
@@ -33,6 +35,10 @@ public class PlayerStateMachine
 
     public void ChangeState(IState newState)
     {
+
+        if (isStateLocked && newState != currentState)
+            return;
+
         if (currentState != null)
         {
             currentState.Exit();
