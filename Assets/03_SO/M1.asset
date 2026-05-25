@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   type: 0
-  content: Text Mission
-  isCompleted: 1
+  content: Make something
+  isCompleted: 0

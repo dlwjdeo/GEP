@@ -148,6 +148,7 @@ public class LoggingState : IState
                 GameObject.Instantiate(player.prefabToSpawn[1], player.FowardGameObject.transform.position + Vector3.left, Quaternion.identity);
                 GameObject.Destroy(player.FowardGameObject);
                 player.SetPrefabToSpawn(null);
+                GameManager.Instance.MissionManager.CompleteMission(MissionType.Chop);
             }
             player.stateMachine.ChangeState(player.stateMachine.idleState);
         }

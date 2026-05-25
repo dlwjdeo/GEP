@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3
   type: 2
-  content: Text Mission
+  content: Cut down a tree
   isCompleted: 0
