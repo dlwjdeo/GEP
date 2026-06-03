@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -15,8 +14,8 @@ public class InventoryUI : MonoBehaviour
 
     private void Start()
     {
-        axeImage.color = new Color(1f, 0f, 0f, 1f); // 초기에는 빨갛게 설정
-        fishingRodImage.color = new Color(1f, 0f, 0f, 1f); // 초기에는 빨갛게 설정
+        axeImage.color = new Color(1f, 1f, 1f, 0f); // 초기에는 빨갛게 설정
+        fishingRodImage.color = new Color(1f, 1f, 1f, 0f); // 초기에는 빨갛게 설정
     }
 
     private void OnEnable()
@@ -60,11 +59,15 @@ public class InventoryUI : MonoBehaviour
 
     private void OnAxeCrafted()
     {
-        axeImage.color = new Color(0f, 1f, 0f, 1f); // 도끼 제작 시 초록색으로 변경
+        Color color = axeImage.color;
+        color.a = 1.0f;
+        axeImage.color = color;
     }
 
     private void OnFishingRodCrafted()
     {
-        fishingRodImage.color = new Color(0f, 1f, 0f, 1f); // 낚시대 제작 시 초록색으로 변경
+        Color color = fishingRodImage.color;
+        color.a = 1.0f;
+        fishingRodImage.color = color;
     }
 }
