@@ -8,7 +8,7 @@ public class Bucket : Item,IPickupable
 
     [SerializeField] private Material filledMaterial; // 양동이가 채워졌을 때의 재질
     [SerializeField] private Material emptyMaterial; // 양동이가 비었을 때의 재질
-
+    [SerializeField] private Sprite filledSprite;
     public void Pickup(Player player)
     {
         if (player.PlayerInventory.HasItem()) return; // 이미 아이템이 있는 경우 픽업 불가

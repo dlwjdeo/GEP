@@ -8,7 +8,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI itemNameText;
     [SerializeField] private Image axeImage;
     [SerializeField] private Image fishingRodImage;
-
+    [SerializeField] private Image inventoryImage;
     [SerializeField] private Player _player;
     [SerializeField] private CraftManager _craftManager;
 
@@ -48,12 +48,20 @@ public class InventoryUI : MonoBehaviour
     {
         if (_player.PlayerInventory.HasItem())
         {
-            itemNameText.text = _player.PlayerInventory.GetCurrentItemType().ToString();
+            var item = _player.PlayerInventory.GetCurrentItem();
+            inventoryImage.sprite = item.ItemSprite;
+            Color color = inventoryImage.color;
+            color.a = 1.0f;
+            inventoryImage.color = color;
+            
+            
             Debug.Log($"인벤토리 UI 업데이트: {_player.PlayerInventory.GetCurrentItemType()}");
         }
         else
         {
-            itemNameText.text = "No Item";
+            Color color = inventoryImage.color;
+            color.a = 0.0f;
+            inventoryImage.color = color;
         }
     }
 

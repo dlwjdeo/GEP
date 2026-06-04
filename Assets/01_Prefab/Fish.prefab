@@ -119,6 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: 5
+  itemSprite: {fileID: 1902347645, guid: 4497e9ba7bc9e6a42a2424c1e172c63f, type: 3}
   fillAmount: 40
   eatDuration: 2
   cookDuration: 3

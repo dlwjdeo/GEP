@@ -119,5 +119,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: 8
+  itemSprite: {fileID: -2047128097, guid: 4497e9ba7bc9e6a42a2424c1e172c63f, type: 3}
   fillAmount: 80
   eatDuration: 2
