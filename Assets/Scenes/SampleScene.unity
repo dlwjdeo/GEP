@@ -525,7 +525,7 @@ MonoBehaviour:
   ironPrefab: {fileID: 4059194737935095893, guid: 15d1d184589eef44380cfb83d764dc21, type: 3}
   plantPrefab: {fileID: 8141202001337979694, guid: c3c84005c844f7341aaed0d1457eb601, type: 3}
   ironSpawnInterval: 10
-  plantSpawnInterval: 7
+  plantSpawnInterval: 5
 --- !u!4 &227017158
 Transform:
   m_ObjectHideFlags: 0
