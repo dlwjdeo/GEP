@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     
     [SerializeField] private PlayerInventory playerInventory;
     [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private Animator animator;
+    public Animator Animator => animator; 
 
     [Header("Ray Settings")]
     [SerializeField] private float interactRange = 2f;

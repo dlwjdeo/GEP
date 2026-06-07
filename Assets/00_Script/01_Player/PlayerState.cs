@@ -17,6 +17,7 @@ public class IdleState : IState
     public void Enter()
     {
         player.PlayerMovement.SetMoveSpeed(0f);
+        player.Animator.CrossFade("Idle", 0.1f);
     }
 
     public void Update()
@@ -47,6 +48,7 @@ public class MoveState : IState
     public void Enter()
     {
         player.PlayerMovement.SetMoveSpeed(player.PlayerMovement.MoveSpeed);
+        player.Animator.CrossFade("Run", 0.1f);
     }
 
     public void Update()
@@ -82,6 +84,7 @@ public class FishingState : IState
     {
         player.PlayerMovement.SetMoveSpeed(0f);
         fishingDuration = player.fishingDuration;
+        player.Animator.CrossFade("Craft", 0.1f);
         //fishingDuration = Random.Range(2f, 5f); // 낚시 시간 랜덤 설정 (예시)
     }
 
@@ -125,6 +128,7 @@ public class LoggingState : IState
     {
         loggingDuration = player.loggingDuration;
         player.stateMachine.isStateLocked = true;
+        player.Animator.CrossFade("Chop", 0.1f);
     }
 
     public void Update()
@@ -178,6 +182,7 @@ public class EatingState : IState
         player.PlayerMovement.SetMoveSpeed(0f);
         eatingDuration = player.eatingDuration;
         player.stateMachine.isStateLocked = true;
+        player.Animator.CrossFade("Craft", 0.1f);
     }
 
     public void Update()
@@ -219,6 +224,7 @@ public class CookingState : IState
         player.PlayerMovement.SetMoveSpeed(0f);
         cookingDuration = player.cookingDuration;
         player.stateMachine.isStateLocked = true;
+        player.Animator.CrossFade("Craft", 0.1f);
     }
 
     public void Update()
@@ -268,6 +274,7 @@ public class RepairState : IState
         player.PlayerMovement.SetMoveSpeed(0f);
         repairDuration = player.repairDuration;
         player.stateMachine.isStateLocked = true;
+        player.Animator.CrossFade("Craft", 0.1f);
     }
 
     public void Update()
