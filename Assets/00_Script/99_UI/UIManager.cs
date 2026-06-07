@@ -20,6 +20,4 @@ public class UIManager : MonoBehaviour
     {
         figureUI.RefreshAll();
     }
-
-    public void 
 }
