@@ -17,7 +17,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private SpawnManager spawnManager;
     public SpawnManager SpawnManager => spawnManager;
 
-    [SerializeField] private FigureUI figureUI;
+    [SerializeField] private UIManager uiManager;
+    public UIManager UIManager => uiManager;
 
     [Header("Player Stats")]
     [SerializeField] private float playerMaxHealth = 100f;
@@ -58,11 +59,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {   
-
-        RefreshAllUI();
-    }
 
     private void Update()
     {
@@ -80,11 +76,6 @@ public class GameManager : MonoBehaviour
             playerMaxHealth
         );
 
-        if (figureUI != null)
-        {
-            figureUI.RefreshHunger(playerCurrentHealth, playerMaxHealth);
-        }
-
         if (playerCurrentHealth <= 0f)
         {
             GameOver();
@@ -99,11 +90,6 @@ public class GameManager : MonoBehaviour
             fireMaxHealth
         );
 
-        if (figureUI != null)
-        {
-            figureUI.RefreshFire(fireCurrentHealth, fireMaxHealth);
-        }
-
         if (fireCurrentHealth <= 0f)
         {
             GameOver();
@@ -113,31 +99,16 @@ public class GameManager : MonoBehaviour
     public void IncreasePlayerHealth(float amount)
     {
         playerCurrentHealth = Mathf.Clamp(playerCurrentHealth + amount, 0f, playerMaxHealth);
-
-        if (figureUI != null)
-        {
-            figureUI.RefreshHunger(playerCurrentHealth, playerMaxHealth);
-        }
     }
 
     public void IncreaseFireHealth(float amount)
     {
         fireCurrentHealth = Mathf.Clamp(fireCurrentHealth + amount, 0f, fireMaxHealth);
-
-        if (figureUI != null)
-        {
-            figureUI.RefreshFire(fireCurrentHealth, fireMaxHealth);
-        }
     }
 
     public void IncreaseRocketHealth(float amount)
     {
         rocketCurrentHealth = Mathf.Clamp(rocketCurrentHealth + amount, 0f, rocketMaxHealth);
-
-        if (figureUI != null)
-        {
-            figureUI.RefreshRocket(rocketCurrentHealth, rocketMaxHealth);
-        }
 
         if(rocketCurrentHealth>=rocketMaxHealth)
         {
@@ -145,23 +116,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void RefreshAllUI()
-    {
-        if (figureUI == null)
-        {
-            return;
-        }
-
-        figureUI.RefreshAll();
-    }
 
     public void GameClear()
     {
-        figureUI.PopupResult("GameClear");
+        uiManager.PopupResult("GameClear");
     }
     public void GameOver()
     {
-        figureUI.PopupResult("Game Over");
+        uiManager.PopupResult("Game Over");
     }
 
     public void Restart()

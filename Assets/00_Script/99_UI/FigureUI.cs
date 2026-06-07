@@ -4,22 +4,27 @@ using UnityEngine.UI;
 
 public class FigureUI : MonoBehaviour
 {
-    [SerializeField] private GameManager gameManager;
 
     [Header("Bars")]
     [SerializeField] private Image hungerBar;
     [SerializeField] private Image fireBar;
     [SerializeField] private Image rocketBar;
+    private GameManager gameManager;
 
-    [SerializeField] private GameObject resultPanel;
-    private Button restartButton;
+    private void Awake()
+    {
+        UIManager uiManager = GetComponentInParent<UIManager>();
+        gameManager = uiManager.GameManager;
+    }
 
     private void Start()
+    {   
+        RefreshAll();
+    }
+
+    public void Update()
     {
         RefreshAll();
-        restartButton = GetComponentInChildren<Button>();
-        restartButton.onClick.AddListener(gameManager.Restart);
-        resultPanel.SetActive(false);
     }
 
     public void RefreshAll()
@@ -48,15 +53,5 @@ public class FigureUI : MonoBehaviour
     {
         float ratio = max <= 0f ? 0f : current / max;
         targetBar.fillAmount = Mathf.Clamp01(ratio);
-    }
-
-    public void PopupResult(string message)
-    {
-        var tmp = resultPanel.GetComponentInChildren<TextMeshProUGUI>();
-        if (tmp != null)
-        {
-            tmp.text = message;
-            resultPanel.SetActive(true);
-        }
     }
 }
