@@ -145,8 +145,8 @@ public class LoggingState : IState
             {
                 Debug.Log("나무 베기 완료! 통나무 획득!");
                 GameObject.Instantiate(player.prefabToSpawn[0], player.FowardGameObject.transform.position + Vector3.forward, Quaternion.identity);
-                GameObject.Instantiate(player.prefabToSpawn[1], player.FowardGameObject.transform.position + Vector3.right, Quaternion.identity);
-                GameObject.Instantiate(player.prefabToSpawn[1], player.FowardGameObject.transform.position + Vector3.left, Quaternion.identity);
+                GameObject.Instantiate(player.prefabToSpawn[1], player.FowardGameObject.transform.position + Vector3.right, Quaternion.Euler(-90f, 0f, 0f));
+                GameObject.Instantiate(player.prefabToSpawn[1], player.FowardGameObject.transform.position + Vector3.left, Quaternion.Euler(-90f, 0f, 0f));
                 GameObject.Destroy(player.FowardGameObject);
                 player.SetPrefabToSpawn(null);
                 GameManager.Instance.MissionManager.CompleteMission(MissionType.Chop);

@@ -1,30 +1,39 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public GameObject currentItemObject; // 현재 들고 있는 아이템의 게임 오브젝트 참조
+    public GameObject currentItemObject;
     public bool isUnlockFishing;
     public Action OnInventoryChanged;
+
+    [Header("Drop Ground")]
+    [SerializeField] private LayerMask groundLayerMask;
+    [SerializeField] private float dropDistance = 1f;
+    [SerializeField] private float rayStartHeight = 50f;
+    [SerializeField] private float rayDistance = 100f;
+    [SerializeField] private float dropGroundOffset = 0.55f;
+
     private Player _player;
 
     private void Start()
-    {   
+    {
         _player = GetComponent<Player>();
         isUnlockFishing = false;
     }
+
     public ItemType GetCurrentItemType()
     {
-        if(currentItemObject != null)
+        if (currentItemObject != null)
         {
             Item item = currentItemObject.GetComponent<Item>();
+
             if (item != null)
             {
-                return item.ItemType; // 아이템 타입 반환
+                return item.ItemType;
             }
         }
+
         return ItemType.None;
     }
 
@@ -34,8 +43,10 @@ public class PlayerInventory : MonoBehaviour
             return null;
 
         var item = currentItemObject.GetComponent<Item>();
+
         if (item == null)
             return null;
+
         return item;
     }
 
@@ -43,32 +54,53 @@ public class PlayerInventory : MonoBehaviour
     {
         currentItemObject = itemObject;
         OnInventoryChanged?.Invoke();
+
         if (_player != null)
             _player.RefreshForwardTarget();
     }
+
     public bool HasItem()
     {
         return currentItemObject != null;
     }
+
     public void DropItem()
     {
-        if (currentItemObject != null)
-        {
-            // 아이템을 플레이어의 위치에 떨어뜨림
-            currentItemObject.transform.SetParent(null);
-            currentItemObject.transform.position = transform.position + transform.forward; // 플레이어 앞에 배치
-            SetCurrentItem(null); // 인벤토리에서 아이템 제거
-            if (_player != null)
-                _player.RefreshForwardTarget();
-        }
+        if (currentItemObject == null)
+            return;
+
+        currentItemObject.transform.SetParent(null);
+
+        Vector3 dropPosition = transform.position + transform.forward * dropDistance;
+        dropPosition = SnapDropPositionToGround(dropPosition);
+
+        currentItemObject.transform.position = dropPosition;
+
+        SetCurrentItem(null);
+
+        if (_player != null)
+            _player.RefreshForwardTarget();
     }
-    
+
+    private Vector3 SnapDropPositionToGround(Vector3 position)
+    {
+        Vector3 rayStart = new Vector3(position.x, position.y + rayStartHeight, position.z);
+
+        if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, rayDistance, groundLayerMask, QueryTriggerInteraction.Ignore))
+        {
+            position.y = hit.point.y + dropGroundOffset;
+        }
+
+        return position;
+    }
+
     public void RemoveItem()
     {
         if (currentItemObject != null)
         {
-            Destroy(currentItemObject); // 아이템 오브젝트 제거
-            SetCurrentItem(null); // 인벤토리에서 아이템 제거
+            Destroy(currentItemObject);
+            SetCurrentItem(null);
+
             if (_player != null)
                 _player.RefreshForwardTarget();
         }

@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections;
 
 public class SpawnManager : MonoBehaviour
-{   
+{
     //랜덤 좌표의 위치 후보지
     public struct SpawnCandidate
     {
@@ -17,7 +17,9 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    [SerializeField] private Collider groundCollider;
+    [Header("Ground")]
+    [SerializeField] private BoxCollider spawnBoundsCollider; // 스폰 가능 범위를 계산할 BoxCollider
+    [SerializeField] private MeshCollider groundCollider;         // 실제 울퉁불퉁한 땅을 탐지할 MeshCollider
 
     [SerializeField] private Transform rocket;
     [SerializeField] private Transform pond;
@@ -28,12 +30,14 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private int sampleCount = 50;
     [SerializeField] private float minDistanceFromItems = 5.0f;
     [SerializeField] private LayerMask itemLayerMask;
+    [SerializeField] private float spawnGroundOffset = 0.55f;
 
     [SerializeField] private Iron ironPrefab;
     [SerializeField] private Plant plantPrefab;
 
     [SerializeField] private float ironSpawnInterval = 10.0f;
     [SerializeField] private float plantSpawnInterval = 5.0f;
+
     private int ironSpawnCounter = 0;
     private int plantSpawnCounter = 0;
 
@@ -57,7 +61,8 @@ public class SpawnManager : MonoBehaviour
             Debug.LogWarning($"{prefab.name} 스폰 위치를 찾지 못했습니다.");
             return null;
         }
-        Vector3 finalPosition = spawnPosition.Value + Vector3.up * 0.55f;
+
+        Vector3 finalPosition = spawnPosition.Value + Vector3.up * spawnGroundOffset;
         return Instantiate(prefab, finalPosition, Quaternion.identity);
     }
 
@@ -73,15 +78,16 @@ public class SpawnManager : MonoBehaviour
 
     private List<SpawnCandidate> BuildCandidates(Item item)
     {
-
         //1.초기에 Ground(사각형)에 내접하는 원 범위 내로 스폰장소 필터링
         List<SpawnCandidate> candidates = new List<SpawnCandidate>();
-        Bounds bounds = groundCollider.bounds;
+
+        if (spawnBoundsCollider == null || groundCollider == null)
+            return candidates;
+
+        Bounds bounds = spawnBoundsCollider.bounds;
 
         Vector3 center = bounds.center;
         float radius = Mathf.Min(bounds.extents.x, bounds.extents.z);
-
-
 
         //2.sampleCount까지 만약 적절한 위치를 찾지 못햇다면 다시 검사 ex)위치가 특정되도 그 자리에 y축 ray를 쐈을 때 이미 오브젝트가 탐지되면 재검사
         for (int i = 0; i < sampleCount; i++)
@@ -93,7 +99,7 @@ public class SpawnManager : MonoBehaviour
 
             Vector3 rayStart = new Vector3(x, bounds.max.y + rayStartHeight, z);
 
-            if (!Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, 200f))
+            if (!Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, 200f, ~0, QueryTriggerInteraction.Ignore))
                 continue;
 
             if (hit.collider != groundCollider)
@@ -117,14 +123,12 @@ public class SpawnManager : MonoBehaviour
     }
 
     private bool IsOverlapping(Vector3 point)
-    {   
-       
+    {
         return Physics.CheckSphere(point, minDistanceFromItems, itemLayerMask);
     }
 
     private Vector3 PickWeightedRandom(List<SpawnCandidate> candidates)
-    {   
-
+    {
         //모여진 최종 위치 후보군중에서 가중치에 따라 랜덤으로 뽑기 진행.
         float totalWeight = 0f;
 
@@ -158,7 +162,6 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-
     private void AddIronSpawnInterval(float additionalTime)
     {
         ironSpawnInterval += additionalTime;
@@ -179,7 +182,7 @@ public class SpawnManager : MonoBehaviour
         }
         else if (ironSpawnCounter == 5)
         {
-            AddIronSpawnInterval(15.0f); // 아이언 스폰 간격을 10초 늘립니다.
+            AddIronSpawnInterval(15.0f); // 아이언 스폰 간격을 15초 늘립니다.
         }
     }
 
@@ -210,6 +213,7 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(ironSpawnInterval);
         }
     }
+
     private IEnumerator PlantSpawnRoutine()
     {
         while (true)
@@ -219,5 +223,4 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(plantSpawnInterval);
         }
     }
-
 }
