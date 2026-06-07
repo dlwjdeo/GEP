@@ -2,6 +2,33 @@ using UnityEngine;
 
 public class Campfire : MonoBehaviour , IInteractable
 {
+    [SerializeField] private ParticleSystem fire;
+
+    private void Update()
+    {
+        if (fire == null || GameManager.Instance == null)
+            return;
+
+        float fireRatio = GameManager.Instance.FireCurrentHealth / GameManager.Instance.FireMaxHealth;
+        fireRatio = Mathf.Clamp01(fireRatio);
+
+        var main = fire.main;
+        main.startSize = Mathf.Lerp(0.1f, 1, fireRatio);
+
+        var emission = fire.emission;
+        emission.rateOverTime = Mathf.Lerp(0, 30.0f, fireRatio);
+
+        if (fireRatio <= 0f && fire.isPlaying)
+        {
+            fire.Stop();
+        }
+        else if (fireRatio > 0f && !fire.isPlaying)
+        {
+            fire.Play();
+        }
+
+
+    }
     public void Interact(Player player)
     {
         var itemType = player.PlayerInventory.GetCurrentItemType();

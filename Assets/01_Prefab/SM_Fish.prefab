@@ -102,7 +102,7 @@ MonoBehaviour:
   fillAmount: 40
   eatDuration: 2
   cookDuration: 3
-  cookedFish: {fileID: 1571671714708531131, guid: 0383ea0618777c44b836a64396fd24a3, type: 3}
+  cookedFish: {fileID: 8443212534175872513, guid: 83cbd14b687dfe8419d73aef0a9522b2, type: 3}
 --- !u!65 &-4327414913265051242
 BoxCollider:
   m_ObjectHideFlags: 0
