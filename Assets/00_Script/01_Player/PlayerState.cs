@@ -17,6 +17,10 @@ public class IdleState : IState
     public void Enter()
     {
         player.PlayerMovement.SetMoveSpeed(0f);
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.StopFootstep();
+        }
         player.Animator.CrossFade("Idle", 0.1f);
     }
 
@@ -48,6 +52,10 @@ public class MoveState : IState
     public void Enter()
     {
         player.PlayerMovement.SetMoveSpeed(player.PlayerMovement.MoveSpeed);
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.StartFootstep();
+        }
         player.Animator.CrossFade("Run", 0.1f);
     }
 
@@ -67,7 +75,10 @@ public class MoveState : IState
 
     public void Exit()
     {
-        
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.StopFootstep();
+        }
     }
 }
 
@@ -128,6 +139,10 @@ public class LoggingState : IState
     {
         loggingDuration = player.loggingDuration;
         player.stateMachine.isStateLocked = true;
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.StartTreeChopLoop();
+        }
         player.Animator.CrossFade("Chop", 0.1f);
     }
 
@@ -162,7 +177,10 @@ public class LoggingState : IState
 
     public void Exit()
     {
-        
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.StopActionLoop();
+        }
     }
 }
 
@@ -274,6 +292,10 @@ public class RepairState : IState
         player.PlayerMovement.SetMoveSpeed(0f);
         repairDuration = player.repairDuration;
         player.stateMachine.isStateLocked = true;
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.StartRepairLoop();
+        }
         player.Animator.CrossFade("Craft", 0.1f);
     }
 
@@ -294,6 +316,10 @@ public class RepairState : IState
 
     public void Exit()
     {
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.StopActionLoop();
+        }
         player.PlayerMovement.SetMoveSpeed(player.PlayerMovement.MoveSpeed);
     }
 }

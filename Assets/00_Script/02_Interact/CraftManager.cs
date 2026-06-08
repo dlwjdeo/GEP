@@ -75,8 +75,14 @@ public class CraftManager : MonoBehaviour
         _tagetItem = targetItem;
 
         GameManager.Instance.MissionManager.CompleteMission(MissionType.Craft);
-        
-        return craftFunc.Invoke(player);
+
+        bool isCrafted = craftFunc.Invoke(player);
+        if (isCrafted && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlayCraftSfx();
+        }
+
+        return isCrafted;
     }
 
     private bool UnlockAxe(Player player)
