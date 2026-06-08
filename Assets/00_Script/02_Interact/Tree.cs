@@ -47,6 +47,7 @@ public class Tree : Item, IInteractable
             if(bucket != null && bucket.isFilled)
             {
                 bucket.Empty(); // 양동이를 비웁니다.
+                player.PlayerInventory.OnInventoryChanged?.Invoke();
                 transform.localScale = Vector3.one; // 나무가 자란 후에는 원래 크기로 설정
                 isGrown = true;
             }

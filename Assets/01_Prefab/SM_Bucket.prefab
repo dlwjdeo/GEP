@@ -101,6 +101,9 @@ MonoBehaviour:
   itemSprite: {fileID: 1824127391, guid: 4497e9ba7bc9e6a42a2424c1e172c63f, type: 3}
   isFilled: 0
   filledSprite: {fileID: -1185461496, guid: da88d1f096f1e9643b7c27bf05f28b1d, type: 3}
+  defaultSprite: {fileID: 1824127391, guid: 4497e9ba7bc9e6a42a2424c1e172c63f, type: 3}
+  emptyMaterial: {fileID: 2100000, guid: 583eb4cbdf20a41489bb1742c020a2a6, type: 2}
+  filledMaterial: {fileID: 2100000, guid: e9a7dc3c84739cf45b25b6fdae379d60, type: 2}
 --- !u!136 &424089185247163889
 CapsuleCollider:
   m_ObjectHideFlags: 0

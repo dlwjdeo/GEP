@@ -22,6 +22,7 @@ public class Pond : MonoBehaviour , IInteractable
             }
 
             bucket.Fill();
+            player.PlayerInventory.OnInventoryChanged?.Invoke();
             return;
             //여기서 버킷에 물 채우는 효과
         }

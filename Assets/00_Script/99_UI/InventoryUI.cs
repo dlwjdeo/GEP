@@ -14,8 +14,7 @@ public class InventoryUI : MonoBehaviour
 
     private void Start()
     {
-        axeImage.color = new Color(1f, 1f, 1f, 0f); // 초기에는 빨갛게 설정
-        fishingRodImage.color = new Color(1f, 1f, 1f, 0f); // 초기에는 빨갛게 설정
+        
     }
 
     private void OnEnable()
