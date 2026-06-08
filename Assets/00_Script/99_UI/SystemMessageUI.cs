@@ -5,6 +5,7 @@ public class SystemMessageUI : MonoBehaviour
 {
     [SerializeField] private TextMeshPro messageText;
     [SerializeField] private float yOffset = 2f;
+    [SerializeField] private float zOffset = 0f;
     private Vector3 fixedWorldEulerAngles = new Vector3(0f, 0f, 0f);
 
     public string currentMessage { get; private set; }
@@ -46,7 +47,7 @@ public class SystemMessageUI : MonoBehaviour
             return;
         }
 
-        messageText.transform.position = followTarget.transform.position + new Vector3(0f, yOffset, 0f);
+        messageText.transform.position = followTarget.transform.position + new Vector3(0f, yOffset, zOffset);
         messageText.transform.rotation = Quaternion.Euler(fixedWorldEulerAngles);
     }
 
@@ -66,7 +67,7 @@ public class SystemMessageUI : MonoBehaviour
         {
             followTarget = player.gameObject;
             shouldFollowTarget = true;
-            messageText.transform.position = followTarget.transform.position + new Vector3(0f, yOffset, 0f);
+            messageText.transform.position = followTarget.transform.position + new Vector3(0f, yOffset, zOffset);
         }
         else
         {
@@ -84,7 +85,7 @@ public class SystemMessageUI : MonoBehaviour
                 basePosition = transform.position;
             }
 
-            messageText.transform.position = basePosition + new Vector3(0f, yOffset, 0f);
+            messageText.transform.position = basePosition + new Vector3(0f, yOffset, zOffset);
         }
 
         messageText.transform.rotation = Quaternion.Euler(fixedWorldEulerAngles);

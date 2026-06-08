@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
 
         stateMachine = new PlayerStateMachine(this);
 
-        loggingDuration = 3f;
+        loggingDuration = 7f;
     }
 
     public void Update()

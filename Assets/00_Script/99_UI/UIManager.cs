@@ -11,9 +11,9 @@ public class UIManager : MonoBehaviour
 
     public GameManager GameManager => gameManager;
 
-    public void PopupResult(string message)
+    public void PopupResult(string message, float timer = 0f)
     {
-        resultUI.PopupResult(message);
+        resultUI.PopupResult(message, timer);
     }
 
     public void RefreshFigureUI()

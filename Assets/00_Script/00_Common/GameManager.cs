@@ -34,6 +34,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float rocketMaxHealth = 200f;
     [SerializeField] private float rocketCurrentHealth = 0f;
 
+    [Header("Timer")]
+    [SerializeField] private float gameTimer = 0f;
+    private GameState gameState;
+
     public float PlayerMaxHealth => playerMaxHealth;
     public float PlayerCurrentHealth => playerCurrentHealth;
 
@@ -43,7 +47,8 @@ public class GameManager : MonoBehaviour
     public float RocketMaxHealth => rocketMaxHealth;
     public float RocketCurrentHealth => rocketCurrentHealth;
 
-   
+    public float GameTimer => gameTimer;
+
 
     private void Awake()
     {
@@ -57,6 +62,8 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        gameState = GameState.Playing;
     }
 
 
@@ -64,12 +71,21 @@ public class GameManager : MonoBehaviour
     {
         DecreasePlayerHealth();
         DecreaseFireHealth();
+        UpdateGameTimer();
     }
 
+    private void UpdateGameTimer()
+    {
+        if(gameState != GameState.Playing) return;
+
+        gameTimer += Time.deltaTime;
+    }
 
     //Rect범위를 초과하지 않아야 하기 때문에 Clamp를 사용해서 범위 제한
     private void DecreasePlayerHealth()
     {
+        if(gameState != GameState.Playing) return;
+
         playerCurrentHealth = Mathf.Clamp(
             playerCurrentHealth - healthDecreaseRate * Time.deltaTime,
             0f,
@@ -84,6 +100,8 @@ public class GameManager : MonoBehaviour
 
     private void DecreaseFireHealth()
     {
+        if(gameState != GameState.Playing) return;
+
         fireCurrentHealth = Mathf.Clamp(
             fireCurrentHealth - fireDecreaseRate * Time.deltaTime,
             0f,
@@ -119,10 +137,12 @@ public class GameManager : MonoBehaviour
 
     public void GameClear()
     {
-        uiManager.PopupResult("GameClear");
+        gameState = GameState.GameClear;
+        uiManager.PopupResult("GameClear", gameTimer);
     }
     public void GameOver()
     {
+        gameState = GameState.GameOver;
         uiManager.PopupResult("Game Over");
     }
 
@@ -130,4 +150,11 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+}
+
+public enum GameState
+{
+    Playing,
+    GameOver,
+    GameClear
 }

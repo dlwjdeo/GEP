@@ -103,4 +103,4 @@ MonoBehaviour:
   logPrefab: {fileID: 8883538823528972473, guid: b66c815368dab364b8c1221b5024d737, type: 3}
   applePrefab: {fileID: 1829371231341652, guid: 426b44a7575f71e479fab4f4e8431989, type: 3}
   isGrown: 1
-  growTime: 5
+  growTime: 10
