@@ -72,10 +72,7 @@ public class GameManager : MonoBehaviour
         DecreasePlayerHealth();
         DecreaseFireHealth();
         UpdateGameTimer();
-        if (Input.GetKeyDown(KeyCode.N))
-            GameClear();
-        if (Input.GetKeyDown(KeyCode.M))
-            GameOver();
+      
     }
 
     private void UpdateGameTimer()
