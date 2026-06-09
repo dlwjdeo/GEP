@@ -26,9 +26,9 @@ public class Iron : Item, IInteractable, IPickupable
     public void Pickup(Player player)
     {
         if (player.PlayerInventory.HasItem()) return; 
-        player.PlayerInventory.SetCurrentItem(gameObject);
         gameObject.transform.SetParent(player.transform); 
-        gameObject.transform.localPosition = Vector3.up; 
+        gameObject.transform.localPosition = Vector3.up;
+        player.PlayerInventory.SetCurrentItem(gameObject); 
     }
 
     
