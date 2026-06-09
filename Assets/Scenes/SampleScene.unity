@@ -898,9 +898,9 @@ MonoBehaviour:
   craftClip: {fileID: 8300000, guid: 8568a684583de8d42beec6eddddf15d0, type: 3}
   footstepClip: {fileID: 8300000, guid: e6fb2aba334f5e8499884ccb3eb50e45, type: 3}
   treeChopClip: {fileID: 8300000, guid: 2b1b382a082ac4b4cac863d60b41fcde, type: 3}
-  bgmVolume: 1
+  bgmVolume: 0.5
   sfxVolume: 1
-  footstepVolume: 1
+  footstepVolume: 0.25
   bgmSource: {fileID: 0}
   sfxSource: {fileID: 0}
   footstepSource: {fileID: 0}
