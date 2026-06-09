@@ -895,7 +895,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmClip: {fileID: 8300000, guid: 44a28d6f0b4a0c548b8f576caf9a0434, type: 3}
-  craftClip: {fileID: 8300000, guid: e33764a342a62b040a9deee03c19c97b, type: 3}
+  craftClip: {fileID: 8300000, guid: 8568a684583de8d42beec6eddddf15d0, type: 3}
   footstepClip: {fileID: 8300000, guid: e6fb2aba334f5e8499884ccb3eb50e45, type: 3}
   treeChopClip: {fileID: 8300000, guid: 2b1b382a082ac4b4cac863d60b41fcde, type: 3}
   bgmVolume: 1
