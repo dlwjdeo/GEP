@@ -67,6 +67,12 @@ public class Comparer
 
     private bool checkCraft(ItemType itemType, GameObject targetObj)
     {
+        if (targetObj == null)
+            return false;
+
+        // 현재 들고 있는 아이템 자기 자신으로 제작 판정되는 것 방지
+        if (_player != null && targetObj == _player.PlayerInventory.currentItemObject)
+            return false;
 
         if (!targetObj.TryGetComponent<Item>(out Item targetItem))
             return false;

@@ -112,6 +112,13 @@ public class Player : MonoBehaviour
             if (target == transform) continue;
 
             GameObject targetObject = target.gameObject;
+
+            // 손에 들고 있는 아이템은 상호작용 타겟에서 제외
+            if (playerInventory.currentItemObject == targetObject) continue;
+
+            // 플레이어 자식으로 붙어있는 오브젝트도 제외
+            if (target.IsChildOf(transform)) continue;
+
             if (((1 << targetObject.layer) & ItemLayer.value) == 0) continue;
 
             Vector3 toTarget = target.position - origin;
@@ -129,6 +136,7 @@ public class Player : MonoBehaviour
                 bestTarget = targetObject;
             }
         }
+
         return bestTarget;
     }
 
