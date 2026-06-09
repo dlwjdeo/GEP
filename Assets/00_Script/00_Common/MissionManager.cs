@@ -6,7 +6,7 @@ public class MissionManager : MonoBehaviour
 {
     [SerializeField]
     private List<Mission> missions = new List<Mission>();
-
+    public IReadOnlyList<Mission> Missions => missions;
     private Dictionary<int, MissionSlot> missionSlotTable = new Dictionary<int, MissionSlot>();
     private Dictionary<MissionType, MissionSlot> missionSlotByType = new Dictionary<MissionType, MissionSlot>();
 
@@ -33,7 +33,7 @@ public class MissionManager : MonoBehaviour
                 }
             }
         }
-        //missions.Clear();
+        
     }
 
     public void CompleteMission(int id)

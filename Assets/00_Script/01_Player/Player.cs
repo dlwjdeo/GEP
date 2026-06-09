@@ -142,7 +142,10 @@ public class Player : MonoBehaviour
 
     private void HandlePickupOrDrop()
     {
-        if(playerInventory.HasItem())
+        if (stateMachine.isStateLocked)
+            return;
+
+        if (playerInventory.HasItem())
         {
             playerInventory.DropItem();
             return;
