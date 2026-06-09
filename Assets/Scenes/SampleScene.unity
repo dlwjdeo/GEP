@@ -894,13 +894,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e615cd356140a3e419b1cf2f8e8d7053, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmClip: {fileID: 0}
-  craftClip: {fileID: 0}
-  footstepClip: {fileID: 0}
-  treeChopClip: {fileID: 0}
-  bgmVolume: 0.6
+  bgmClip: {fileID: 8300000, guid: 44a28d6f0b4a0c548b8f576caf9a0434, type: 3}
+  craftClip: {fileID: 8300000, guid: e33764a342a62b040a9deee03c19c97b, type: 3}
+  footstepClip: {fileID: 8300000, guid: e6fb2aba334f5e8499884ccb3eb50e45, type: 3}
+  treeChopClip: {fileID: 8300000, guid: 2b1b382a082ac4b4cac863d60b41fcde, type: 3}
+  bgmVolume: 1
   sfxVolume: 1
-  footstepVolume: 0.7
+  footstepVolume: 1
   bgmSource: {fileID: 0}
   sfxSource: {fileID: 0}
   footstepSource: {fileID: 0}

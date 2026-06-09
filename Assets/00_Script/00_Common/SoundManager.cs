@@ -67,6 +67,8 @@ public class SoundManager : MonoBehaviour
 
     private void ApplyInitialSettings()
     {
+       
+
         bgmSource.loop = true;
         bgmSource.playOnAwake = false;
         bgmSource.volume = bgmVolume;
