@@ -85,6 +85,19 @@ crashlytics-build.properties
 Thumbs.db
 Desktop.ini
 
+# Local analysis tools and root-level report artifacts
+/.codex-tools/
+/*.doc
+/*.docx
+/*.html
+/*.htm
+/*.pdf
+/*.ppt
+/*.pptx
+/*.xls
+/*.xlsx
+/*.rtf
+
 # Packed Addressables
 /[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 
